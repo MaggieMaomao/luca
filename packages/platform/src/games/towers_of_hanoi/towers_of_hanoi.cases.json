@@ -1,0 +1,107 @@
+{
+  "game": "towers_of_hanoi",
+  "cases": [
+    {
+      "name": "solved (reported)",
+      "state": {
+        "disks": 3,
+        "pegs": {
+          "A": [],
+          "B": [],
+          "C": [
+            3,
+            2,
+            1
+          ]
+        },
+        "moves": 7
+      },
+      "finalStats": {
+        "moves": 7
+      },
+      "reportedComplete": true,
+      "expect": {
+        "complete": true
+      }
+    },
+    {
+      "name": "solved (under-reported)",
+      "state": {
+        "disks": 3,
+        "pegs": {
+          "A": [],
+          "B": [],
+          "C": [
+            3,
+            2,
+            1
+          ]
+        },
+        "moves": 7
+      },
+      "finalStats": {
+        "moves": 7
+      },
+      "reportedComplete": false,
+      "expect": {
+        "complete": true
+      }
+    },
+    {
+      "name": "not solved",
+      "state": {
+        "disks": 3,
+        "pegs": {
+          "A": [
+            3,
+            2,
+            1
+          ],
+          "B": [],
+          "C": []
+        },
+        "moves": 0
+      },
+      "finalStats": {
+        "moves": 0
+      },
+      "reportedComplete": false,
+      "expect": {
+        "complete": false
+      }
+    },
+    {
+      "name": "cheat: reports complete but unsolved",
+      "state": {
+        "disks": 3,
+        "pegs": {
+          "A": [
+            3,
+            2,
+            1
+          ],
+          "B": [],
+          "C": []
+        },
+        "moves": 0
+      },
+      "finalStats": {
+        "moves": 1
+      },
+      "reportedComplete": true,
+      "expect": {
+        "complete": false,
+        "errorCode": "CHEAT_DETECTED"
+      }
+    },
+    {
+      "name": "malformed",
+      "state": {},
+      "reportedComplete": true,
+      "expect": {
+        "complete": false,
+        "errorCode": "INVALID_STATE"
+      }
+    }
+  ]
+}

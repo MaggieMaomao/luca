@@ -1,0 +1,272 @@
+/* Fruit Salad - visual styles */
+
+.fruit-salad .fs-wrap {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.8rem;
+  padding: 1rem;
+  user-select: none;
+  position: relative;
+}
+
+.fruit-salad .fs-grid {
+  display: grid;
+  grid-template-columns: 80px repeat(var(--num-fruits, 3), 48px) 60px;
+  gap: 6px;
+  align-items: center;
+}
+
+.fruit-salad .fs-corner {
+  width: 100%;
+  height: 36px;
+}
+
+.fruit-salad .fs-total-h {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  opacity: 0.6;
+}
+
+.fruit-salad .fs-fruit-header {
+  width: 48px;
+  height: 48px;
+  border-radius: var(--r-1);
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.6rem;
+  padding: 0;
+  transition: all 0.1s ease;
+}
+
+.fruit-salad .fs-fruit-header:hover:not(:disabled) {
+  background: rgba(79, 158, 255, 0.1);
+  border-color: rgba(79, 158, 255, 0.4);
+}
+
+.fruit-salad .fs-fruit-header.selected {
+  background: rgba(79, 158, 255, 0.2);
+  border-color: rgba(79, 158, 255, 0.6);
+}
+
+.fruit-salad .fs-bowl {
+  display: contents;
+}
+
+.fruit-salad .fs-bowl-label {
+  width: 100%;
+  height: 36px;
+  border-radius: var(--r-1);
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid transparent;
+  color: inherit;
+  font-weight: 600;
+  font-size: 0.85rem;
+  cursor: pointer;
+  padding: 0;
+  transition: all 0.1s ease;
+}
+
+.fruit-salad .fs-bowl-label:hover:not(:disabled) {
+  background: rgba(79, 158, 255, 0.1);
+  border-color: rgba(79, 158, 255, 0.4);
+}
+
+.fruit-salad .fs-bowl-label.selected {
+  background: rgba(79, 158, 255, 0.2);
+  border-color: rgba(79, 158, 255, 0.6);
+}
+
+.fruit-salad .fs-cell {
+  width: 48px;
+  height: 36px;
+  border-radius: var(--r-1);
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  color: inherit;
+  font-weight: 600;
+  font-variant-numeric: tabular-nums;
+  cursor: pointer;
+  padding: 0;
+  transition: all 0.1s ease;
+}
+
+.fruit-salad .fs-cell:hover:not(:disabled) {
+  background: rgba(79, 158, 255, 0.1);
+  border-color: rgba(79, 158, 255, 0.4);
+}
+
+.fruit-salad .fs-cell.target {
+  background: rgba(79, 158, 255, 0.2);
+  border-color: rgba(79, 158, 255, 0.6);
+  transform: scale(0.95);
+}
+
+.fruit-salad .fs-cell.correct {
+  background: rgba(34, 197, 94, 0.2);
+  border-color: #22c55e;
+  color: #22c55e;
+}
+
+.fruit-salad .fs-bowl-sum {
+  font-size: 0.75rem;
+  text-align: center;
+  opacity: 0.7;
+  font-variant-numeric: tabular-nums;
+  padding: 0 0.4rem;
+}
+
+/* A bowl/fruit total that the player has satisfied. */
+.fruit-salad .fs-bowl-sum.ok {
+  opacity: 1;
+  color: #22c55e;
+  font-weight: 700;
+}
+
+/* Filled (non-zero) cell — subtle emphasis. */
+.fruit-salad .fs-cell.filled {
+  background: rgba(79, 158, 255, 0.12);
+  border-color: rgba(79, 158, 255, 0.35);
+}
+
+/* Column-totals footer row. */
+.fruit-salad .fs-coltot-label {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.7rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  opacity: 0.6;
+}
+.fruit-salad .fs-coltot {
+  padding-top: 0.2rem;
+}
+
+.fruit-salad .fs-palette {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.6rem 0.9rem;
+  background: rgba(79, 158, 255, 0.08);
+  border-radius: var(--r-1);
+}
+
+.fruit-salad .fs-palette-label {
+  font-size: 0.85rem;
+  opacity: 0.8;
+}
+
+.fruit-salad .fs-palette-buttons {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.3rem;
+  justify-content: center;
+}
+
+.fruit-salad .fs-pal-btn {
+  min-width: 30px;
+  height: 30px;
+  border-radius: var(--r-1);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  background: rgba(255, 255, 255, 0.05);
+  color: inherit;
+  font-weight: 600;
+  font-variant-numeric: tabular-nums;
+  cursor: pointer;
+  padding: 0 0.5rem;
+  transition: all 0.1s ease;
+}
+
+.fruit-salad .fs-pal-btn:hover {
+  background: rgba(79, 158, 255, 0.2);
+  border-color: rgba(79, 158, 255, 0.6);
+}
+
+.fruit-salad .fs-pal-btn.selected {
+  background: rgba(79, 158, 255, 0.9);
+  color: white;
+  border-color: rgba(79, 158, 255, 0.9);
+}
+
+.fruit-salad .fs-result {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 0.7rem;
+  text-align: center;
+  padding: 1.5rem;
+  background: rgba(0, 0, 0, 0.9);
+  border-radius: var(--r-1);
+  z-index: 10;
+  animation: fs-result-appear 0.4s ease;
+}
+
+@keyframes fs-result-appear {
+  from { opacity: 0; transform: scale(0.95); }
+  to   { opacity: 1; transform: scale(1); }
+}
+
+.fruit-salad .fs-result.won .fs-result-title { color: #22c55e; font-size: 1.8rem; font-weight: 800; }
+
+.fruit-salad .fs-result button {
+  margin-top: 0.5rem;
+  padding: 0.5rem 1.4rem;
+  font-size: 0.9rem;
+  font-weight: 600;
+  border-radius: var(--r-1);
+  background: rgba(255, 255, 255, 0.1);
+  color: white;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  cursor: pointer;
+}
+
+.fruit-salad .fs-onboard {
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.7);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 11;
+  cursor: pointer;
+}
+
+.fruit-salad .fs-onboard-inner {
+  background: var(--bg, #1a1a1a);
+  padding: 1.5rem 2rem;
+  border-radius: var(--r-1);
+  max-width: 400px;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  gap: 0.8rem;
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
+}
+
+.fruit-salad .fs-onboard-inner strong { font-size: 1.2rem; }
+.fruit-salad .fs-onboard-inner p { opacity: 0.85; line-height: 1.4; }
+.fruit-salad .fs-onboard-inner button {
+  align-self: center;
+  padding: 0.5rem 1.2rem;
+  background: rgba(79, 158, 255, 0.9);
+  color: white;
+  border: none;
+  border-radius: var(--r-1);
+  cursor: pointer;
+  font-weight: 500;
+}
+
+.fruit-salad .game-engine-banner { display: none !important; }

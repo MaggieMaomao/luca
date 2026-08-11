@@ -1,0 +1,250 @@
+/* Basketball — minimal styles for the MVP. The game is rendered
+ * by PixiJS (the engine), so this CSS is just for the HUD overlay
+ * and the host container. */
+
+.basketball-host {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  min-height: 600px;
+  background: #1a1f2e;  /* dark backdrop to contrast with the court */
+  overflow: hidden;
+}
+
+.basketball-hud {
+  position: absolute;
+  top: 16px;
+  left: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  font-family: var(--font-sans, system-ui, sans-serif);
+  color: white;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.5);
+  pointer-events: none;  /* let the canvas receive pointer events */
+}
+
+.basketball-hud > div {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.basketball-label {
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  opacity: 0.7;
+}
+
+.basketball-value {
+  font-size: 32px;
+  font-weight: 800;
+  font-variant-numeric: tabular-nums;
+  line-height: 1;
+}
+
+.basketball-status {
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.15em;
+  padding: 4px 10px;
+  border-radius: 4px;
+  background: rgba(0, 0, 0, 0.4);
+  display: inline-block;
+  width: fit-content;
+}
+
+.basketball-status-playing {
+  background: rgba(80, 200, 120, 0.4);
+}
+
+.basketball-status-won {
+  background: rgba(80, 200, 120, 0.6);
+}
+
+.basketball-lastshot {
+  margin-top: 8px;
+  padding-top: 8px;
+  border-top: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.basketball-value-small {
+  font-size: 14px;
+  font-weight: 600;
+  color: #ffcc66;
+}
+
+.basketball-replay-btn {
+  margin-top: 12px;
+  padding: 6px 12px;
+  background: rgba(255, 119, 0, 0.3);
+  border: 1px solid rgba(255, 119, 0, 0.6);
+  border-radius: 4px;
+  color: white;
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.05em;
+  cursor: pointer;
+  pointer-events: auto;
+  font-family: inherit;
+  transition: background 0.15s;
+}
+
+.basketball-replay-btn:hover {
+  background: rgba(255, 119, 0, 0.5);
+}
+
+/* ── Styles for the v1.0.0.165+ self-contained component ─────
+ * The component below uses class names like .basketball-game-root,
+ * .basketball-header, .basketball-stat, .basketball-showcase.
+ * The .basketball-* rules above were for an earlier luca-engine-
+ * backed version and are intentionally left in place so that
+ * reverting to that version doesn't break visually.
+ */
+
+.basketball-game-root {
+  font-family: var(--font-sans, system-ui, -apple-system, sans-serif);
+  color: #222;
+  max-width: 640px;
+  margin: 0 auto;
+  padding: 8px;
+  user-select: none;
+}
+
+.basketball-header {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 12px 16px;
+  padding: 10px 14px;
+  border-radius: 8px;
+  background: linear-gradient(180deg, #2c3548, #1d2436);
+  color: #fff;
+  font-size: 13px;
+  margin-bottom: 10px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+}
+
+.basketball-stat {
+  display: inline-flex;
+  flex-direction: column;
+  gap: 1px;
+  font-feature-settings: 'tnum' 1;
+}
+
+.basketball-label {
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  opacity: 0.65;
+}
+
+.basketball-value {
+  font-size: 20px;
+  font-weight: 800;
+  line-height: 1;
+  font-variant-numeric: tabular-nums;
+}
+
+.basketball-shots {
+  color: #ffd166;
+}
+
+.basketball-lastshot {
+  font-style: italic;
+  opacity: 0.75;
+  font-size: 12px;
+}
+
+.basketball-made {
+  color: #ff7b00;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  text-shadow: 0 0 8px rgba(255, 200, 100, 0.6);
+}
+
+.basketball-court-wrap {
+  display: flex;
+  justify-content: center;
+  padding: 8px;
+  border-radius: 6px;
+  background: linear-gradient(135deg, #3a3f57, #232739);
+}
+
+.basketball-court {
+  display: block;
+  width: 100%;
+  max-width: 600px;
+  height: auto;
+  cursor: crosshair;
+  background: #000;
+  border-radius: 4px;
+  box-shadow: 0 6px 24px rgba(0, 0, 0, 0.4);
+  touch-action: none;  /* prevent browser from handling touch gestures */
+}
+
+.basketball-controls {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  gap: 8px 16px;
+  font-size: 13px;
+  color: #555;
+  margin-top: 10px;
+  padding: 4px 0;
+}
+
+.basketball-controls span {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.basketball-controls kbd {
+  display: inline-block;
+  background: #f7f7f8;
+  border: 1px solid #c8c8d0;
+  border-bottom-width: 2px;
+  border-radius: 4px;
+  padding: 1px 6px;
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-size: 11px;
+  color: #333;
+}
+
+.basketball-showcase {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 6px 14px;
+  border-radius: 999px;
+  border: 1px solid rgba(255, 200, 100, 0.6);
+  background: linear-gradient(180deg, #ffb84d, #ff8c1a);
+  color: #2a1a00;
+  font-family: inherit;
+  font-size: 12px;
+  font-weight: 800;
+  letter-spacing: 0.04em;
+  cursor: pointer;
+  text-transform: uppercase;
+  box-shadow: 0 2px 6px rgba(255, 140, 26, 0.35);
+  transition: filter 0.15s, transform 0.15s;
+}
+
+.basketball-showcase:hover:not(:disabled) {
+  filter: brightness(1.07);
+  transform: translateY(-1px);
+}
+
+.basketball-showcase:active:not(:disabled) {
+  transform: translateY(0);
+}
+
+.basketball-showcase:disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+}

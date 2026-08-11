@@ -1,0 +1,381 @@
+/* 2048 — CatoBigato-native visual identity
+ *
+ * Design philosophy:
+ * - Tile colors progress from soft → deep CatoBigato math blue, NOT
+ *   the original 2048 game's warm orange gradient. The blue ties the
+ *   game to the CatoBigato brand (math subjects use --c-math) and
+ *   looks correct in both light AND dark themes.
+ * - The board uses a math-blue tint as the "recessed gap" — not --ink.
+ *   This keeps the board visibly distinct from empty tiles in both
+ *   themes:
+ *     - light mode:  light math-blue gap with darker math-blue cells
+ *     - dark mode:   dark math-blue gap with even-darker cells
+ * - Number text uses warm yellow (NOT blue, NOT white) for high
+ *   contrast against blue tiles in both themes. Yellow is the
+ *   CatoBigato mascot accent color (--orange family) — it keeps the
+ *   game visually distinct from the rest of the page (which is dark
+ *   text on light bg) while staying on-brand.
+ * - The "2048 tile" is the win state — it gets the orange accent
+ *   gradient with a glow as a celebratory touch.
+ *
+ * Important: the .g2048-tile base class DOES NOT set a `color` —
+ * each tile-level class sets its own. This prevents a flash when
+ * transitioning between tile values during a merge (no color
+ * transition from blue → white on the same DOM element).
+ */
+
+.g2048 {
+  max-width: 480px;
+  margin: 0 auto;
+  padding: 16px;
+  user-select: none;
+  -webkit-user-select: none;
+  touch-action: none;
+}
+
+/* Stats row */
+
+.g2048-stats {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 12px;
+}
+
+.g2048-stat {
+  flex: 1;
+  background: var(--bg-2);
+  border: 1px solid var(--rule-soft);
+  border-radius: var(--r-1);
+  padding: 8px 12px;
+  text-align: center;
+}
+
+.g2048-stat-label {
+  font-size: 10px;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--ink-muted);
+  font-weight: 600;
+}
+
+.g2048-stat-value {
+  font-size: 22px;
+  font-weight: 700;
+  color: var(--ink);
+  line-height: 1.1;
+  margin-top: 2px;
+}
+
+/* Board — math-blue "recessed gap" so empty tiles are clearly distinct */
+
+.g2048-board {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  grid-template-rows: repeat(4, 1fr);
+  gap: 8px;
+  background: #D7DEEF;  /* light math-blue gap */
+  border: 1px solid #B5C2E1;
+  border-radius: var(--r-1);
+  padding: 8px;
+  aspect-ratio: 1;
+  margin-bottom: 12px;
+}
+
+[data-theme="dark"] .g2048-board {
+  background: #2A3656;  /* dark math-blue gap */
+  border-color: #3D4F77;
+}
+
+/* Tile base — math-blue, slightly darker than the gap.
+ * No `color` here — that's set by tile-level classes to avoid a
+ * visible color transition when a tile merges into a different value. */
+
+.g2048-tile {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #EBEEF7;  /* light math-blue tile */
+  border-radius: var(--r-1);
+  font-weight: 800;  /* slightly heavier for the yellow to feel solid */
+  font-size: 28px;
+  /* Background-only transition — color changes instantly to avoid flash */
+  transition: background 0.15s ease, transform 0.1s ease;
+}
+
+[data-theme="dark"] .g2048-tile {
+  background: #1F2A45;  /* dark math-blue tile */
+}
+
+.g2048-tile-empty {
+  background: #C9D3EA;
+}
+
+[data-theme="dark"] .g2048-tile-empty {
+  background: #1A2438;
+}
+
+/* Animations: spawned tiles pop in.
+ *
+ * The CSS animation runs on mount because each new tile gets a
+ * fresh React `key` (a new ID), so React mounts a new DOM element.
+ * The browser then plays the keyframe animation once.
+ *
+ * Trade-off: the initial 2-tile setup also plays the animation
+ * (because those tiles also mount for the first time). At 200ms
+ * it's quick enough to feel like a "loading" pop rather than a
+ * problem. If we wanted to skip the initial mount, we'd need
+ * JavaScript to track "has this tile existed before" which adds
+ * complexity for marginal benefit.
+ */
+
+@keyframes g2048-tile-spawn {
+  0%   { transform: scale(0); opacity: 0; }
+  60%  { transform: scale(1.15); opacity: 1; }
+  100% { transform: scale(1); opacity: 1; }
+}
+
+.g2048-tile:not(.g2048-tile-empty) {
+  animation: g2048-tile-spawn 200ms ease-out;
+}
+
+/* Tile palette — CatoBigato math blue progression with yellow text
+ *
+ * Tile text uses warm yellow (the CatoBigato mascot accent — --orange
+ * family) for high contrast against blue tiles in BOTH themes. Yellow
+ * is not blue (so the "blue on blue" readability problem is gone)
+ * and not white (so no flash when transitioning between tile values).
+ *
+ * Yellow shades:
+ *   - 2/4/8 tiles: deep amber #C97A1A (high contrast on light blue)
+ *   - 16+ tiles:   bright gold #FBCB5A (high contrast on dark blue)
+ *   - 2048+ tiles: stays white for the celebratory win gradient
+ */
+.g2048-tile-2     { background: #E8EEFA; color: #C97A1A; }   /* amber on light blue */
+.g2048-tile-4     { background: #C9D6F2; color: #C97A1A; }
+.g2048-tile-8     { background: #9DB4E5; color: #C97A1A; }
+.g2048-tile-16    { background: #6E8FD6; color: #FBCB5A; }   /* gold on mid blue */
+.g2048-tile-32    { background: #4B6FE0; color: #FBCB5A; }
+.g2048-tile-64    { background: #3D5BC2; color: #FBCB5A; }
+.g2048-tile-128   { background: #324CA0; color: #FBCB5A; }
+.g2048-tile-256   { background: #283D80; color: #FBCB5A; }
+.g2048-tile-512   { background: #1F2F62; color: #FBCB5A; }
+.g2048-tile-1024  { background: #182348; color: #FBCB5A; font-size: 24px; }
+.g2048-tile-2048  {
+  background: linear-gradient(135deg, var(--orange), var(--orange-d));
+  color: #FFFFFF;
+  box-shadow: 0 0 16px rgba(255, 138, 0, 0.4);
+  font-size: 24px;
+}
+.g2048-tile-4096,
+.g2048-tile-8192,
+.g2048-tile-16384,
+.g2048-tile-32768,
+.g2048-tile-65536 {
+  background: linear-gradient(135deg, var(--orange-d), #B04A1A);
+  color: #FFFFFF;
+  font-size: 22px;
+}
+
+@media (max-width: 480px) {
+  .g2048 { padding: 8px; }
+  .g2048-tile { font-size: 22px; }
+  .g2048-stat-value { font-size: 18px; }
+}
+
+/* Win/lose banner actions */
+
+.g2048-win-actions {
+  display: flex;
+  gap: 8px;
+  justify-content: center;
+  margin-top: 12px;
+}
+
+/* Help overlay (full-screen modal) */
+
+.g2048-help {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 100;
+  padding: 16px;
+}
+
+.g2048-help-card {
+  background: var(--bg);
+  border: 1px solid var(--rule);
+  border-radius: var(--r-1);
+  padding: 24px 28px;
+  max-width: 480px;
+  width: 100%;
+  max-height: 90vh;
+  overflow-y: auto;
+  box-shadow: 0 20px 50px -12px rgba(0, 0, 0, 0.4);
+}
+
+.g2048-help-card h3 {
+  margin: 0 0 6px;
+  font-size: 22px;
+  color: var(--ink);
+}
+
+.g2048-help-card h4 {
+  margin: 18px 0 8px;
+  font-size: 13px;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--c-math);
+  font-weight: 700;
+}
+
+[data-theme="dark"] .g2048-help-card h4 {
+  color: #6E8FD6;  /* brighter blue for dark mode visibility */
+}
+
+.g2048-help-card p {
+  margin: 0 0 8px;
+  font-size: 14px;
+  color: var(--ink);
+  line-height: 1.5;
+}
+
+.g2048-help-card ul {
+  margin: 0 0 12px;
+  padding-left: 0;
+  list-style: none;
+  font-size: 13px;
+  color: var(--ink);
+  line-height: 1.8;
+}
+
+.g2048-help-card kbd {
+  display: inline-block;
+  padding: 1px 6px;
+  background: var(--rule-soft);
+  border: 1px solid var(--rule);
+  border-radius: var(--r-1);
+  font-family: monospace;
+  font-size: 11px;
+  margin: 0 1px;
+}
+
+/* Onboarding card (first time) */
+
+.g2048-onboard {
+  background: var(--bg-2);
+  border: 1px solid var(--rule-soft);
+  border-left: 3px solid var(--c-math);
+  border-radius: var(--r-1);
+  padding: 16px 20px;
+  margin-bottom: 16px;
+  display: flex;
+  gap: 16px;
+  align-items: flex-start;
+}
+
+.g2048-onboard-icon {
+  font-size: 28px;
+  line-height: 1;
+  flex-shrink: 0;
+  color: var(--c-math);
+  font-weight: 700;
+  width: 32px;
+  text-align: center;
+}
+
+[data-theme="dark"] .g2048-onboard-icon {
+  color: #6E8FD6;
+}
+
+.g2048-onboard-body {
+  flex: 1;
+  min-width: 0;
+}
+
+.g2048-onboard-title {
+  font-size: 15px;
+  font-weight: 700;
+  color: var(--ink);
+  margin: 0 0 6px;
+}
+
+.g2048-onboard-text {
+  font-size: 13px;
+  color: var(--ink-muted);
+  line-height: 1.5;
+  margin: 0 0 8px;
+}
+
+.g2048-onboard-rules {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  font-size: 12px;
+  color: var(--ink-soft);
+  margin: 0 0 12px;
+  padding-left: 0;
+  list-style: none;
+}
+
+.g2048-onboard-rules li {
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+}
+
+.g2048-onboard-rules li::before {
+  content: "•";
+  color: var(--c-math);
+  font-weight: 700;
+  flex-shrink: 0;
+}
+
+[data-theme="dark"] .g2048-onboard-rules li::before {
+  color: #6E8FD6;
+}
+
+.g2048-onboard-actions {
+  display: flex;
+  gap: 8px;
+}
+
+/* Foot row */
+
+.g2048-foot {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-size: 12px;
+  color: var(--ink-muted);
+}
+
+.g2048-foot-hint {
+  flex: 1;
+}
+
+.g2048-help-link {
+  width: 28px;
+  height: 28px;
+  border-radius: var(--r-1);
+  background: var(--bg-2);
+  border: 1px solid var(--rule);
+  color: var(--ink-muted);
+  font-size: 14px;
+  font-weight: 700;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: inherit;
+  transition: background 0.1s ease;
+}
+
+.g2048-help-link:hover {
+  background: var(--c-math);
+  color: #fff;
+  border-color: var(--c-math);
+}

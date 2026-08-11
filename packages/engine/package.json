@@ -1,0 +1,88 @@
+{
+  "name": "@luca-game/engine",
+  "version": "0.1.0",
+  "description": "Generic React state machine for running any game. Framework-coupled to React but UI-agnostic.",
+  "type": "module",
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js"
+    },
+    "./realtime": {
+      "types": "./dist/realtime/index.d.ts",
+      "import": "./dist/realtime/index.js"
+    },
+    "./action": {
+      "types": "./dist/action/index.d.ts",
+      "import": "./dist/action/index.js"
+    },
+    "./action/r3f": {
+      "types": "./dist/action/render/r3f.d.ts",
+      "import": "./dist/action/render/r3f.js"
+    },
+    "./action/input": {
+      "types": "./dist/action/input/index.d.ts",
+      "import": "./dist/action/input/index.js"
+    }
+  },
+  "files": [
+    "dist",
+    "README.md",
+    "LICENSE"
+  ],
+  "scripts": {
+    "build": "tsc -p tsconfig.json && node scripts/copy-assets.mjs && node scripts/fix-imports.mjs",
+    "test": "node --experimental-strip-types src/action/core/core.test.ts",
+    "lint": "tsc --noEmit -p tsconfig.json",
+    "clean": "rm -rf dist .tsbuildinfo"
+  },
+  "peerDependencies": {
+    "react": "^18.0.0 || ^19.0.0",
+    "react-dom": "^18.0.0 || ^19.0.0",
+    "react-i18next": "^11.0.0 || ^12.0.0 || ^13.0.0 || ^14.0.0 || ^15.0.0 || ^16.0.0 || ^17.0.0",
+    "three": ">=0.150.0",
+    "@react-three/fiber": "^8.0.0 || ^9.0.0"
+  },
+  "peerDependenciesMeta": {
+    "three": { "optional": true },
+    "@react-three/fiber": { "optional": true }
+  },
+  "devDependencies": {
+    "@react-three/fiber": "^8.18.0",
+    "@types/matter-js": "^0.20.2",
+    "@types/react": "^18.0.0",
+    "@types/react-dom": "^18.0.0",
+    "@types/three": "^0.170.0",
+    "matter-js": "^0.20.0",
+    "pixi.js": "^8.19.0",
+    "react": "^18.0.0",
+    "react-dom": "^18.0.0",
+    "react-i18next": "^13.0.0",
+    "three": "^0.170.0",
+    "typescript": "^5.3.0"
+  },
+  "keywords": [
+    "games",
+    "engine",
+    "state-machine",
+    "react",
+    "luca",
+    "open-source"
+  ],
+  "license": "MIT",
+  "author": "MaggieMaomao <https://github.com/MaggieMaomao>",
+  "homepage": "https://github.com/MaggieMaomao/luca#readme",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/MaggieMaomao/luca.git",
+    "directory": "packages/engine"
+  },
+  "bugs": {
+    "url": "https://github.com/MaggieMaomao/luca/issues"
+  },
+  "publishConfig": {
+    "access": "public"
+  }
+}

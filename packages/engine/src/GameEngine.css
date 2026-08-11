@@ -1,0 +1,192 @@
+/* Game Engine — shared styles for stats row, banners, help overlay.
+ * Game-specific styles (board, tiles) stay in the game's own CSS file. */
+
+.game-engine {
+  max-width: 720px;
+  margin: 0 auto;
+  padding: 12px;  /* reduced from 16px — saves 8px vertical */
+  user-select: none;
+  -webkit-user-select: none;
+}
+
+/* Header: stats + restart */
+
+.game-engine-header {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 12px;
+  flex-wrap: wrap;
+}
+
+.game-engine-stat-block {
+  flex: 1;
+  min-width: 60px;
+  background: var(--bg-2);
+  border: 1px solid var(--rule-soft, rgba(0, 0, 0, 0.08));
+  border-radius: var(--r-1);
+  padding: 6px 10px;
+  text-align: center;
+}
+
+.game-engine-stat-label {
+  font-size: 10px;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--ink-muted, #888);
+  font-weight: 600;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.game-engine-stat-value {
+  font-size: 18px;
+  font-weight: 700;
+  color: var(--ink, #222);
+  line-height: 1.1;
+  margin-top: 2px;
+  text-transform: capitalize;
+}
+
+/* Restart button uses .cb-btn.cb-btn-md.cb-btn-primary from the shared system */
+
+/* Body: where the game's render output goes */
+
+.game-engine-body {
+  margin-bottom: 12px;
+}
+
+/* Foot: help toggle */
+
+.game-engine-foot {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  gap: 8px;
+}
+
+/* Restart now lives bottom-right next to the help toggle (was in the header). */
+.game-engine-restart {
+  min-width: 0;
+}
+
+/* "?" help button — same button component (cb-btn cb-btn-md) and height as
+ * Restart; just constrained to a compact square-ish width. */
+.game-engine-help-toggle {
+  min-width: 40px;
+  padding-left: 0;
+  padding-right: 0;
+  font-weight: 700;
+}
+
+/* Win + loss banners (shared by all games) */
+
+.game-engine-banner {
+  padding: 16px 20px;
+  border-radius: var(--r-1);
+  text-align: center;
+  margin: 16px 0;
+}
+
+.game-engine-banner strong {
+  display: block;
+  font-size: 16px;
+  font-weight: 700;
+  margin-bottom: 4px;
+}
+
+.game-engine-banner p {
+  margin: 0 0 12px;
+  font-size: 13px;
+  line-height: 1.4;
+}
+
+.game-engine-banner-win {
+  background: rgba(7, 193, 96, 0.1);
+  border: 1px solid rgba(7, 193, 96, 0.3);
+  color: #066e3a;
+}
+
+.game-engine-banner-loss {
+  background: rgba(220, 38, 38, 0.08);
+  border: 1px solid rgba(220, 38, 38, 0.3);
+  color: #b91c1c;
+}
+
+/* Buttons (.cb-btn) are imported from the shared metroUI button system
+ * in index.css. No custom button styles needed here. */
+
+/* Help overlay */
+
+.game-engine-help {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 100;
+  padding: 16px;
+}
+
+.game-engine-help-card {
+  background: var(--bg-2);
+  border-radius: var(--r-1);
+  padding: 24px 28px;
+  max-width: 440px;
+  width: 100%;
+  max-height: 90vh;
+  overflow-y: auto;
+  box-shadow: 0 20px 50px -12px rgba(0, 0, 0, 0.4);
+}
+
+.game-engine-help-card h3 {
+  margin: 0 0 8px;
+  font-size: 18px;
+  color: var(--ink, #222);
+}
+
+.game-engine-help-card h4 {
+  margin: 16px 0 8px;
+  font-size: 14px;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--ink-muted, #888);
+}
+
+.game-engine-help-card ul {
+  margin: 0 0 12px;
+  padding-left: 0;
+  list-style: none;
+  font-size: 13px;
+  color: var(--ink, #222);
+  line-height: 1.8;
+}
+
+.game-engine-help-card kbd {
+  display: inline-block;
+  padding: 1px 6px;
+  background: var(--rule-soft, rgba(0, 0, 0, 0.06));
+  border: 1px solid var(--rule, rgba(0, 0, 0, 0.15));
+  border-radius: var(--r-1);
+  font-family: monospace;
+  font-size: 11px;
+  margin: 0 1px;
+}
+
+.game-engine-help-goal {
+  background: var(--rule-soft, rgba(0, 0, 0, 0.03));
+  padding: 8px 10px;
+  border-radius: var(--r-1);
+  margin: 8px 0 12px;
+  font-size: 12px;
+  color: var(--ink-muted, #888);
+}
+
+@media (max-width: 540px) {
+  .game-engine { padding: 8px; }
+  .game-engine-header { gap: 6px; }
+  .game-engine-stat-block { padding: 4px 6px; }
+  .game-engine-stat-value { font-size: 16px; }
+}

@@ -1,0 +1,142 @@
+/* Unknotting - visual styles */
+
+.unknotting .uk-wrap {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.7rem;
+  padding: 0.8rem;
+  user-select: none;
+  position: relative;
+}
+
+.unknotting .uk-info {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  font-size: 0.85rem;
+  padding: 0.3rem 0.9rem;
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: var(--r-1);
+}
+.unknotting .uk-label { opacity: 0.6; font-size: 0.75rem; }
+.unknotting .uk-value { font-weight: 700; font-variant-numeric: tabular-nums; min-width: 1ch; text-align: center; }
+.unknotting .uk-value.ok { color: #22c55e; }
+.unknotting .uk-spacer { width: 1rem; }
+
+.unknotting .uk-svg {
+  width: min(380px, 86vw);
+  height: min(380px, 86vw);
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: var(--r-1);
+  touch-action: none;            /* let us own the drag gesture on touch */
+  overflow: visible;
+}
+
+/* Rope segments. Default = calm; .hot = currently crossing something. */
+.unknotting .uk-seg {
+  stroke: #6aa9c9;
+  stroke-width: 1.6;
+  stroke-linecap: round;
+  transition: stroke 0.12s ease;
+}
+.unknotting .uk-seg.hot {
+  stroke: var(--orange, #ef6c33);
+  stroke-width: 2.1;
+}
+
+/* Draggable points. */
+.unknotting .uk-node {
+  fill: #f6f1e7;
+  stroke: #1c1c1c;
+  stroke-width: 1;
+  cursor: grab;
+  transition: fill 0.1s ease;
+}
+.unknotting .uk-node:hover { fill: #fff; }
+.unknotting .uk-node.dragging {
+  fill: var(--orange, #ef6c33);
+  stroke: #fff;
+  cursor: grabbing;
+}
+
+.unknotting .uk-hint {
+  font-size: 0.8rem;
+  opacity: 0.65;
+  text-align: center;
+  min-height: 1.1em;
+}
+
+.unknotting .uk-result {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 0.6rem;
+  text-align: center;
+  background: rgba(0, 0, 0, 0.88);
+  border-radius: var(--r-1);
+  z-index: 10;
+  animation: uk-result-appear 0.4s ease;
+}
+@keyframes uk-result-appear {
+  from { opacity: 0; transform: scale(0.95); }
+  to   { opacity: 1; transform: scale(1); }
+}
+.unknotting .uk-result.won .uk-result-title {
+  color: #22c55e;
+  font-size: 1.8rem;
+  font-weight: 800;
+}
+.unknotting .uk-result button {
+  margin-top: 0.3rem;
+  padding: 0.5rem 1.4rem;
+  font-size: 0.9rem;
+  font-weight: 600;
+  border-radius: var(--r-1);
+  background: rgba(255, 255, 255, 0.12);
+  color: #fff;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  cursor: pointer;
+}
+.unknotting .uk-result button:hover { background: rgba(255, 255, 255, 0.2); }
+
+.unknotting .uk-onboard {
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.7);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 11;
+  cursor: pointer;
+}
+.unknotting .uk-onboard-inner {
+  background: var(--bg, #1a1a1a);
+  padding: 1.5rem 2rem;
+  border-radius: var(--r-1);
+  max-width: 400px;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  gap: 0.8rem;
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
+}
+.unknotting .uk-onboard-inner strong { font-size: 1.2rem; }
+.unknotting .uk-onboard-inner p { opacity: 0.85; line-height: 1.45; }
+.unknotting .uk-onboard-inner button {
+  align-self: center;
+  padding: 0.5rem 1.2rem;
+  background: var(--orange, #ef6c33);
+  color: #fff;
+  border: none;
+  border-radius: var(--r-1);
+  cursor: pointer;
+  font-weight: 600;
+}
+
+/* The engine's generic win banner duplicates our overlay — hide it. */
+.unknotting .game-engine-banner { display: none !important; }

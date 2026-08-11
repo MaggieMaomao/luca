@@ -1,0 +1,366 @@
+/* Lights Out — CatoBigato-native visual identity
+ *
+ * Design philosophy (mirrors 2048 design pattern):
+ * - Board uses a math-purple tinted "recessed gap" so the grid
+ *   cells are clearly distinct in both light AND dark modes.
+ *   The 3-shade progression (board > off > on) reads as "recessed
+ *   grid with on/off cells inside".
+ * - Off cells use a slightly darker shade so they're clearly
+ *   distinct from the board (no "everything is one square" bug).
+ * - On cells use --c-phys gradient (physics purple) — the
+ *   "energized/active" state.
+ * - Number text uses warm yellow (matching 2048) for high
+ *   contrast against the purple background.
+ * - 3 distinct shades per theme (light vs dark) ensure visibility
+ *   in both modes. The dark-mode variants are deeper purple.
+ *
+ * Why not --ink / --rule-soft? They share tones and the off cells
+ * vanish in dark mode. Use dedicated per-theme purple instead.
+ */
+
+.lights {
+  max-width: 480px;
+  margin: 0 auto;
+  padding: 16px;
+  user-select: none;
+  -webkit-user-select: none;
+}
+
+/* Stats row */
+
+.lights-stats {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 12px;
+}
+
+.lights-stat {
+  flex: 1;
+  background: var(--bg-2);
+  border: 1px solid var(--rule-soft);
+  border-radius: var(--r-1);
+  padding: 6px 10px;
+  text-align: center;
+}
+
+.lights-stat-label {
+  font-size: 9px;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--ink-muted);
+  font-weight: 600;
+}
+
+.lights-stat-value {
+  font-size: 18px;
+  font-weight: 700;
+  color: var(--ink);
+  line-height: 1.1;
+  margin-top: 2px;
+}
+
+.lights-stat-diff .lights-stat-value {
+  font-size: 13px;
+  text-transform: capitalize;
+}
+
+/* Onboarding card (first time) — same shape as 2048 */
+
+.lights-onboard {
+  background: var(--bg-2);
+  border: 1px solid var(--rule-soft);
+  border-left: 3px solid var(--c-phys);
+  border-radius: var(--r-1);
+  padding: 16px 20px;
+  margin-bottom: 16px;
+  display: flex;
+  gap: 16px;
+  align-items: flex-start;
+}
+
+.lights-onboard-icon {
+  font-size: 28px;
+  line-height: 1;
+  flex-shrink: 0;
+  color: var(--c-phys);
+  font-weight: 700;
+  width: 32px;
+  text-align: center;
+}
+
+[data-theme="dark"] .lights-onboard-icon {
+  color: #B19DE8;
+}
+
+.lights-onboard-body {
+  flex: 1;
+  min-width: 0;
+}
+
+.lights-onboard-title {
+  font-size: 15px;
+  font-weight: 700;
+  color: var(--ink);
+  margin: 0 0 6px;
+}
+
+.lights-onboard-text {
+  font-size: 13px;
+  color: var(--ink-muted);
+  line-height: 1.5;
+  margin: 0 0 8px;
+}
+
+.lights-onboard-rules {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  font-size: 12px;
+  color: var(--ink-soft);
+  margin: 0 0 12px;
+  padding-left: 0;
+  list-style: none;
+}
+
+.lights-onboard-rules li {
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+}
+
+.lights-onboard-rules li::before {
+  content: "•";
+  color: var(--c-phys);
+  font-weight: 700;
+  flex-shrink: 0;
+}
+
+[data-theme="dark"] .lights-onboard-rules li::before {
+  color: #B19DE8;
+}
+
+.lights-onboard-actions {
+  display: flex;
+  gap: 8px;
+}
+
+/* Difficulty chip — uses pill (var(--r-round)) since it's a chip */
+
+.lights-diff-inline {
+  display: inline-block;
+  font-size: 11px;
+  padding: 2px 10px;
+  border-radius: var(--r-round);
+  background: var(--rule-soft);
+  color: var(--ink-muted);
+  text-transform: capitalize;
+  margin-bottom: 8px;
+  font-weight: 500;
+}
+
+/* Grid — physics-purple "recessed gap" so off cells are clearly distinct */
+
+.lights-grid {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 6px;
+  background: #E2DDF2;  /* light physics-purple gap */
+  border: 1px solid #C5BCE0;
+  border-radius: var(--r-1);
+  padding: 8px;
+  aspect-ratio: 1;
+  margin-bottom: 12px;
+}
+
+[data-theme="dark"] .lights-grid {
+  background: #2D2440;  /* dark physics-purple gap */
+  border-color: #423559;
+}
+
+.lights-cell {
+  border: 1px solid var(--rule-soft);
+  border-radius: var(--r-1);
+  cursor: pointer;
+  font-size: 28px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: inherit;
+  font-weight: 800;  /* heavier for the yellow ● to feel solid */
+  transition: background 0.15s ease, transform 0.05s ease;
+  padding: 0;
+  /* No color transition — prevents flash when toggling on/off */
+}
+
+/* OFF cell — slightly darker than the gap, distinct in both themes */
+
+.lights-cell-off {
+  background: #D2CCE5;  /* light purple off-cell */
+  color: transparent;
+}
+
+[data-theme="dark"] .lights-cell-off {
+  background: #1F1830;  /* dark purple off-cell */
+  color: transparent;
+}
+
+.lights-cell-off:hover {
+  background: #C5BCE0;
+  border-color: var(--rule);
+}
+
+[data-theme="dark"] .lights-cell-off:hover {
+  background: #2D2440;
+}
+
+/* ON cell — bright physics-purple gradient with warm yellow ●
+ * (matching 2048's yellow tile text on a colored background) */
+
+.lights-cell-on {
+  background: linear-gradient(135deg, var(--c-phys), #6B40B5);
+  border-color: #6B40B5;
+  color: #FBCB5A;  /* warm gold for the ● — matches 2048 yellow text */
+  box-shadow: 0 0 10px rgba(135, 87, 217, 0.4);
+}
+
+[data-theme="dark"] .lights-cell-on {
+  background: linear-gradient(135deg, #B19DE8, var(--c-phys));
+  border-color: var(--c-phys);
+  color: #FFD580;  /* brighter gold for dark mode */
+  box-shadow: 0 0 10px rgba(177, 157, 232, 0.4);
+}
+
+.lights-cell-on:hover {
+  background: linear-gradient(135deg, #9C7DE7, #7B4DC5);
+}
+
+.lights-cell:active {
+  transform: scale(0.95);
+}
+
+/* Win banner actions */
+
+.lights-win-actions {
+  display: flex;
+  gap: 8px;
+  justify-content: center;
+  margin-top: 12px;
+}
+
+/* Help overlay (shared pattern with 2048) */
+
+.lights-help {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 100;
+  padding: 16px;
+}
+
+.lights-help-card {
+  background: var(--bg);
+  border: 1px solid var(--rule);
+  border-radius: var(--r-1);
+  padding: 24px 28px;
+  max-width: 440px;
+  width: 100%;
+  max-height: 90vh;
+  overflow-y: auto;
+  box-shadow: 0 20px 50px -12px rgba(0, 0, 0, 0.4);
+}
+
+.lights-help-card h3 {
+  margin: 0 0 6px;
+  font-size: 22px;
+  color: var(--ink);
+}
+
+.lights-help-card h4 {
+  margin: 18px 0 8px;
+  font-size: 13px;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--c-phys);
+  font-weight: 700;
+}
+
+[data-theme="dark"] .lights-help-card h4 {
+  color: #B19DE8;
+}
+
+.lights-help-card p {
+  margin: 0 0 8px;
+  font-size: 14px;
+  color: var(--ink);
+  line-height: 1.5;
+}
+
+.lights-help-card ul {
+  margin: 0 0 12px;
+  padding-left: 0;
+  list-style: none;
+  font-size: 13px;
+  color: var(--ink);
+  line-height: 1.8;
+}
+
+.lights-help-card kbd {
+  display: inline-block;
+  padding: 1px 6px;
+  background: var(--rule-soft);
+  border: 1px solid var(--rule);
+  border-radius: var(--r-1);
+  font-family: monospace;
+  font-size: 11px;
+  margin: 0 1px;
+}
+
+.lights-help-target {
+  background: var(--rule-soft);
+  padding: 8px 10px;
+  border-radius: var(--r-1);
+  margin: 8px 0 12px !important;
+  font-size: 12px !important;
+  color: var(--ink-muted) !important;
+}
+
+/* Foot */
+
+.lights-foot {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-size: 12px;
+  color: var(--ink-muted);
+}
+
+.lights-foot-hint {
+  flex: 1;
+}
+
+.lights-help-link {
+  width: 28px;
+  height: 28px;
+  border-radius: var(--r-1);
+  background: var(--bg-2);
+  border: 1px solid var(--rule);
+  color: var(--ink-muted);
+  font-size: 14px;
+  font-weight: 700;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: inherit;
+  transition: background 0.1s ease;
+}
+
+.lights-help-link:hover {
+  background: var(--c-phys);
+  color: #fff;
+  border-color: var(--c-phys);
+}

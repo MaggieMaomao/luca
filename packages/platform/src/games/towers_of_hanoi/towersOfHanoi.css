@@ -1,0 +1,258 @@
+/* Towers of Hanoi — visual styles
+ *
+ * Three large "pegs" rising from a base, with disks stacked on each.
+ * The smallest disk is at the top, the largest at the bottom. When
+ * a peg is selected, the top disk gets a glowing border. Disks are
+ * colored by size (hue rotated from a teal base for each disk).
+ */
+
+.towers-of-hanoi .towers-board {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1.5rem;
+  padding: 1rem 0.5rem;
+  user-select: none;
+}
+
+/* ── Progress bar ──────────────────────────────────────────── */
+
+.towers-of-hanoi .towers-progress {
+  width: min(100%, 500px);
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+}
+
+.towers-of-hanoi .towers-progress-bar {
+  height: 8px;
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: var(--r-1);
+  overflow: hidden;
+}
+
+.towers-of-hanoi .towers-progress-fill {
+  height: 100%;
+  background: linear-gradient(90deg, #4ade80 0%, #22c55e 100%);
+  transition: width 0.3s ease;
+}
+
+.towers-of-hanoi .towers-progress-text {
+  font-size: 0.85rem;
+  opacity: 0.7;
+  text-align: center;
+}
+
+/* ── Pegs ────────────────────────────────────────────────────── */
+
+.towers-of-hanoi .towers-pegs {
+  display: flex;
+  gap: 2rem;
+  align-items: flex-end;
+  width: min(100%, 600px);
+  justify-content: center;
+  padding: 0 1rem;
+}
+
+.towers-of-hanoi .tower {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background: transparent;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+  flex: 1;
+  min-height: 320px;
+  justify-content: flex-end;
+  position: relative;
+}
+
+.towers-of-hanoi .tower:focus-visible {
+  outline: 2px solid var(--blue, #4f9eff);
+  outline-offset: 4px;
+  border-radius: var(--r-1);
+}
+
+.towers-of-hanoi .tower-label {
+  position: absolute;
+  top: 0;
+  font-size: 1.5rem;
+  font-weight: 600;
+  opacity: 0.6;
+}
+
+.towers-of-hanoi .tower.selected .tower-label,
+.towers-of-hanoi .tower.target .tower-label {
+  opacity: 1;
+  color: var(--blue, #4f9eff);
+}
+
+.towers-of-hanoi .tower-stack {
+  display: flex;
+  flex-direction: column-reverse;  /* disks stack bottom-up, smallest on top */
+  align-items: center;
+  justify-content: flex-end;
+  min-height: 240px;
+  width: 100%;
+  padding-top: 1.5rem;  /* space for the label */
+  position: relative;
+}
+
+.towers-of-hanoi .tower-empty {
+  width: 30px;
+  height: 12px;
+  border-radius: var(--r-1) var(--r-1) 0 0;
+  background: rgba(255, 255, 255, 0.05);
+}
+
+.towers-of-hanoi .tower-base {
+  width: 100%;
+  height: 12px;
+  border-radius: 0;
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.15) 0%, rgba(255, 255, 255, 0.05) 100%);
+  margin-top: 4px;
+  position: relative;
+}
+
+.towers-of-hanoi .tower-base::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 2px;
+  height: 200px;
+  background: rgba(255, 255, 255, 0.15);
+  z-index: -1;
+}
+
+/* ── Disks ──────────────────────────────────────────────────── */
+
+.towers-of-hanoi .disk {
+  height: 24px;
+  margin-bottom: 2px;
+  border-radius: var(--r-1);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: rgba(0, 0, 0, 0.7);
+  font-size: 0.85rem;
+  font-weight: 600;
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+.towers-of-hanoi .disk.top {
+  cursor: pointer;
+}
+
+.towers-of-hanoi .disk.top.selected {
+  transform: translateY(-4px);
+  box-shadow: 0 0 0 3px var(--blue, #4f9eff), 0 6px 12px rgba(0, 0, 0, 0.3);
+}
+
+.towers-of-hanoi .disk-label {
+  text-shadow: 0 1px 2px rgba(255, 255, 255, 0.3);
+}
+
+/* ── Selected / target states ──────────────────────────────── */
+
+.towers-of-hanoi .tower.target {
+  background: rgba(79, 158, 255, 0.08);
+  border-radius: var(--r-1);
+  transition: background 0.15s ease;
+}
+
+/* ── Error message ────────────────────────────────────────── */
+
+.towers-of-hanoi .towers-error {
+  color: #f87171;
+  font-size: 0.9rem;
+  padding: 0.4rem 0.8rem;
+  background: rgba(248, 113, 113, 0.1);
+  border-radius: var(--r-1);
+  animation: towers-shake 0.3s ease;
+}
+
+@keyframes towers-shake {
+  0%, 100% { transform: translateX(0); }
+  25% { transform: translateX(-4px); }
+  75% { transform: translateX(4px); }
+}
+
+/* ── Controls ─────────────────────────────────────────────── */
+
+.towers-of-hanoi .towers-controls {
+  display: flex;
+  gap: 1rem;
+  align-items: center;
+  font-size: 0.9rem;
+}
+
+.towers-of-hanoi .towers-controls select,
+.towers-of-hanoi .towers-controls button {
+  font-size: 0.9rem;
+  padding: 0.3rem 0.7rem;
+  border-radius: var(--r-1);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  background: rgba(255, 255, 255, 0.05);
+  color: inherit;
+  cursor: pointer;
+}
+
+.towers-of-hanoi .towers-controls button:hover,
+.towers-of-hanoi .towers-controls select:hover {
+  background: rgba(255, 255, 255, 0.1);
+}
+
+.towers-of-hanoi .towers-controls button:disabled,
+.towers-of-hanoi .towers-controls select:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+/* ── Onboarding overlay ───────────────────────────────────── */
+
+.towers-of-hanoi .towers-onboard {
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.7);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 10;
+  cursor: pointer;
+}
+
+.towers-of-hanoi .towers-onboard-inner {
+  background: var(--bg, #1a1a1a);
+  padding: 1.5rem 2rem;
+  border-radius: var(--r-1);
+  max-width: 400px;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  gap: 0.8rem;
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
+}
+
+.towers-of-hanoi .towers-onboard-inner strong {
+  font-size: 1.2rem;
+}
+
+.towers-of-hanoi .towers-onboard-inner p {
+  opacity: 0.85;
+  line-height: 1.4;
+}
+
+.towers-of-hanoi .towers-onboard-inner button {
+  align-self: center;
+  padding: 0.5rem 1.2rem;
+  background: var(--blue, #4f9eff);
+  color: white;
+  border: none;
+  border-radius: var(--r-1);
+  cursor: pointer;
+  font-weight: 500;
+}

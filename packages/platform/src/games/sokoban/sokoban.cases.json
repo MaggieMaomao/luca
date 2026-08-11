@@ -1,0 +1,366 @@
+{
+  "game": "sokoban",
+  "cases": [
+    {
+      "name": "box on target (reported)",
+      "state": {
+        "width": 4,
+        "height": 3,
+        "walls": [
+          [
+            true,
+            true,
+            true,
+            true
+          ],
+          [
+            true,
+            false,
+            false,
+            true
+          ],
+          [
+            true,
+            true,
+            true,
+            true
+          ]
+        ],
+        "targets": [
+          [
+            false,
+            false,
+            false,
+            false
+          ],
+          [
+            false,
+            true,
+            false,
+            false
+          ],
+          [
+            false,
+            false,
+            false,
+            false
+          ]
+        ],
+        "boxes": [
+          [
+            false,
+            false,
+            false,
+            false
+          ],
+          [
+            false,
+            true,
+            false,
+            false
+          ],
+          [
+            false,
+            false,
+            false,
+            false
+          ]
+        ],
+        "player": [
+          1,
+          2
+        ],
+        "moves": 3
+      },
+      "reportedComplete": true,
+      "expect": {
+        "complete": true
+      }
+    },
+    {
+      "name": "box on target (under-reported)",
+      "state": {
+        "width": 4,
+        "height": 3,
+        "walls": [
+          [
+            true,
+            true,
+            true,
+            true
+          ],
+          [
+            true,
+            false,
+            false,
+            true
+          ],
+          [
+            true,
+            true,
+            true,
+            true
+          ]
+        ],
+        "targets": [
+          [
+            false,
+            false,
+            false,
+            false
+          ],
+          [
+            false,
+            true,
+            false,
+            false
+          ],
+          [
+            false,
+            false,
+            false,
+            false
+          ]
+        ],
+        "boxes": [
+          [
+            false,
+            false,
+            false,
+            false
+          ],
+          [
+            false,
+            true,
+            false,
+            false
+          ],
+          [
+            false,
+            false,
+            false,
+            false
+          ]
+        ],
+        "player": [
+          1,
+          2
+        ],
+        "moves": 3
+      },
+      "reportedComplete": false,
+      "expect": {
+        "complete": true
+      }
+    },
+    {
+      "name": "box not on target",
+      "state": {
+        "width": 4,
+        "height": 3,
+        "walls": [
+          [
+            true,
+            true,
+            true,
+            true
+          ],
+          [
+            true,
+            false,
+            false,
+            true
+          ],
+          [
+            true,
+            true,
+            true,
+            true
+          ]
+        ],
+        "targets": [
+          [
+            false,
+            false,
+            false,
+            false
+          ],
+          [
+            false,
+            true,
+            false,
+            false
+          ],
+          [
+            false,
+            false,
+            false,
+            false
+          ]
+        ],
+        "boxes": [
+          [
+            false,
+            false,
+            false,
+            false
+          ],
+          [
+            false,
+            false,
+            true,
+            false
+          ],
+          [
+            false,
+            false,
+            false,
+            false
+          ]
+        ],
+        "player": [
+          1,
+          1
+        ],
+        "moves": 1
+      },
+      "reportedComplete": false,
+      "expect": {
+        "complete": false
+      }
+    },
+    {
+      "name": "cheat: reports complete but box off target",
+      "state": {
+        "width": 4,
+        "height": 3,
+        "walls": [
+          [
+            true,
+            true,
+            true,
+            true
+          ],
+          [
+            true,
+            false,
+            false,
+            true
+          ],
+          [
+            true,
+            true,
+            true,
+            true
+          ]
+        ],
+        "targets": [
+          [
+            false,
+            false,
+            false,
+            false
+          ],
+          [
+            false,
+            true,
+            false,
+            false
+          ],
+          [
+            false,
+            false,
+            false,
+            false
+          ]
+        ],
+        "boxes": [
+          [
+            false,
+            false,
+            false,
+            false
+          ],
+          [
+            false,
+            false,
+            true,
+            false
+          ],
+          [
+            false,
+            false,
+            false,
+            false
+          ]
+        ],
+        "player": [
+          1,
+          1
+        ],
+        "moves": 1
+      },
+      "reportedComplete": true,
+      "expect": {
+        "complete": false,
+        "errorCode": "CHEAT_DETECTED"
+      }
+    },
+    {
+      "name": "malformed (missing boxes layer)",
+      "state": {
+        "width": 4,
+        "height": 3,
+        "walls": [
+          [
+            true,
+            true,
+            true,
+            true
+          ],
+          [
+            true,
+            false,
+            false,
+            true
+          ],
+          [
+            true,
+            true,
+            true,
+            true
+          ]
+        ],
+        "targets": [
+          [
+            false,
+            false,
+            false,
+            false
+          ],
+          [
+            false,
+            true,
+            false,
+            false
+          ],
+          [
+            false,
+            false,
+            false,
+            false
+          ]
+        ],
+        "player": [
+          1,
+          1
+        ]
+      },
+      "reportedComplete": true,
+      "expect": {
+        "complete": false,
+        "errorCode": "INVALID_STATE"
+      }
+    }
+  ]
+}

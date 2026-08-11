@@ -1,0 +1,201 @@
+/* Calcrostic - visual styles */
+
+.calcrostic .cal-wrap {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.8rem;
+  padding: 0.8rem;
+  user-select: none;
+  position: relative;
+}
+
+.calcrostic .cal-info {
+  display: flex;
+  gap: 0.4rem;
+  font-size: 0.85rem;
+  padding: 0.3rem 0.8rem;
+  background: rgba(255, 255, 255, 0.04);
+  border-radius: var(--r-1);
+}
+
+.calcrostic .cal-label { opacity: 0.6; font-size: 0.75rem; }
+.calcrostic .cal-value { font-weight: 600; }
+
+.calcrostic .cal-grid {
+  display: grid;
+  gap: 4px;
+  background: rgba(255, 255, 255, 0.1);
+  /* The right/bottom edges hold bare sum numbers (no cell background), which
+   * visually read as extra space. Give the left/top a bit more padding so the
+   * filled clue cells there aren't crammed against the edge — balanced look. */
+  padding: 14px 6px 6px 14px;
+  border-radius: var(--r-1);
+}
+
+/* Edge cells (corners, clues, sums) and play cells are all 36px so the grid
+ * is square and the 4px padding/gaps are symmetric on every side. */
+.calcrostic .cal-corner { width: 36px; height: 36px; }
+
+.calcrostic .cal-clue {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  font-size: 0.95rem;
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+  background: rgba(255, 255, 255, 0.04);
+  border-radius: var(--r-1);
+}
+
+.calcrostic .cal-cell {
+  width: 36px;
+  height: 36px;
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: var(--r-1);
+  color: inherit;
+  font-weight: 600;
+  font-variant-numeric: tabular-nums;
+  cursor: pointer;
+  padding: 0;
+  transition: all 0.1s ease;
+}
+
+.calcrostic .cal-cell:hover:not(:disabled) {
+  background: rgba(79, 158, 255, 0.1);
+  border-color: rgba(79, 158, 255, 0.4);
+}
+
+.calcrostic .cal-cell.filled { background: rgba(255, 255, 255, 0.08); }
+
+/* Given clue cells — locked, slightly brighter, no hover/pointer. */
+.calcrostic .cal-cell.given {
+  background: rgba(255, 255, 255, 0.12);
+  border-color: rgba(255, 255, 255, 0.06);
+  cursor: default;
+  font-weight: 800;
+}
+
+.calcrostic .cal-cell.selected {
+  background: rgba(79, 158, 255, 0.25);
+  border-color: rgba(79, 158, 255, 0.6);
+}
+
+.calcrostic .cal-sum {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  font-size: 0.85rem;
+  font-variant-numeric: tabular-nums;
+  opacity: 0.7;
+}
+
+.calcrostic .cal-sum.correct { color: #22c55e; opacity: 1; }
+
+.calcrostic .cal-palette {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0.6rem 0.9rem;
+  background: rgba(79, 158, 255, 0.08);
+  border-radius: var(--r-1);
+}
+
+.calcrostic .cal-palette-label { font-size: 0.85rem; opacity: 0.8; }
+.calcrostic .cal-palette-buttons { display: flex; flex-wrap: wrap; gap: 0.3rem; justify-content: center; }
+
+.calcrostic .cal-pal-btn {
+  min-width: 30px;
+  height: 30px;
+  border-radius: var(--r-1);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  background: rgba(255, 255, 255, 0.05);
+  color: inherit;
+  font-weight: 600;
+  font-variant-numeric: tabular-nums;
+  cursor: pointer;
+  padding: 0 0.5rem;
+  transition: all 0.1s ease;
+}
+
+.calcrostic .cal-pal-btn:hover:not(:disabled) { background: rgba(79, 158, 255, 0.2); border-color: rgba(79, 158, 255, 0.6); }
+.calcrostic .cal-pal-btn:disabled { opacity: 0.4; cursor: not-allowed; }
+.calcrostic .cal-pal-clear { color: var(--ink-muted, #999); }
+
+.calcrostic .cal-result {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  text-align: center;
+  padding: 1.5rem;
+  background: rgba(0, 0, 0, 0.9);
+  border-radius: var(--r-1);
+  z-index: 10;
+  animation: cal-result-appear 0.4s ease;
+}
+
+@keyframes cal-result-appear {
+  from { opacity: 0; transform: scale(0.95); }
+  to   { opacity: 1; transform: scale(1); }
+}
+
+.calcrostic .cal-result.won .cal-result-title { color: #22c55e; font-size: 1.8rem; font-weight: 800; }
+.calcrostic .cal-result button {
+  margin-top: 0.5rem;
+  padding: 0.5rem 1.4rem;
+  font-size: 0.9rem;
+  font-weight: 600;
+  border-radius: var(--r-1);
+  background: rgba(255, 255, 255, 0.1);
+  color: white;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  cursor: pointer;
+}
+
+.calcrostic .cal-onboard {
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.7);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 11;
+  cursor: pointer;
+}
+
+.calcrostic .cal-onboard-inner {
+  background: var(--bg, #1a1a1a);
+  padding: 1.5rem 2rem;
+  border-radius: var(--r-1);
+  max-width: 400px;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  gap: 0.8rem;
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
+}
+
+.calcrostic .cal-onboard-inner strong { font-size: 1.2rem; }
+.calcrostic .cal-onboard-inner p { opacity: 0.85; line-height: 1.4; }
+.calcrostic .cal-onboard-inner button {
+  align-self: center;
+  padding: 0.5rem 1.2rem;
+  background: rgba(79, 158, 255, 0.9);
+  color: white;
+  border: none;
+  border-radius: var(--r-1);
+  cursor: pointer;
+  font-weight: 500;
+}
+
+.calcrostic .game-engine-banner { display: none !important; }

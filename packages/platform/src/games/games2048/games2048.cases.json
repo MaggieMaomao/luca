@@ -1,0 +1,181 @@
+{
+  "game": "2048",
+  "cases": [
+    {
+      "name": "has 2048 tile (reported)",
+      "state": [
+        [
+          2048,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0
+        ]
+      ],
+      "finalStats": {
+        "score": 20000
+      },
+      "reportedComplete": true,
+      "expect": {
+        "complete": true
+      }
+    },
+    {
+      "name": "has 2048 tile (under-reported)",
+      "state": [
+        [
+          2048,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0
+        ]
+      ],
+      "finalStats": {
+        "score": 20000
+      },
+      "reportedComplete": false,
+      "expect": {
+        "complete": true
+      }
+    },
+    {
+      "name": "no 2048 tile",
+      "state": [
+        [
+          2,
+          4,
+          8,
+          16
+        ],
+        [
+          32,
+          64,
+          128,
+          256
+        ],
+        [
+          512,
+          1024,
+          2,
+          4
+        ],
+        [
+          8,
+          16,
+          32,
+          64
+        ]
+      ],
+      "finalStats": {
+        "score": 5000
+      },
+      "reportedComplete": false,
+      "expect": {
+        "complete": false
+      }
+    },
+    {
+      "name": "cheat: reports complete, max tile < 2048",
+      "state": [
+        [
+          2,
+          4,
+          8,
+          16
+        ],
+        [
+          32,
+          64,
+          128,
+          256
+        ],
+        [
+          512,
+          1024,
+          2,
+          4
+        ],
+        [
+          8,
+          16,
+          32,
+          64
+        ]
+      ],
+      "reportedComplete": true,
+      "expect": {
+        "complete": false,
+        "errorCode": "CHEAT_DETECTED"
+      }
+    },
+    {
+      "name": "malformed (non power-of-2 cell)",
+      "state": [
+        [
+          3,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0
+        ]
+      ],
+      "reportedComplete": true,
+      "expect": {
+        "complete": false,
+        "errorCode": "INVALID_STATE"
+      }
+    }
+  ]
+}

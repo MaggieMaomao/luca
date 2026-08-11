@@ -1,0 +1,228 @@
+/* Turtle Walk - visual styles */
+
+.turtle-walk .tw-wrap {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1.2rem;
+  padding: 1.2rem 1rem;
+  user-select: none;
+  position: relative;
+  min-height: 280px;
+}
+
+.turtle-walk .tw-start,
+.turtle-walk .tw-commands {
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.4rem;
+}
+
+.turtle-walk .tw-label,
+.turtle-walk .tw-commands-label {
+  font-size: 0.75rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  opacity: 0.6;
+}
+
+.turtle-walk .tw-value {
+  font-size: 1.1rem;
+  font-weight: 600;
+  font-variant-numeric: tabular-nums;
+}
+
+.turtle-walk .tw-command-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.3rem;
+  justify-content: center;
+}
+
+.turtle-walk .tw-cmd {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 36px;
+  height: 36px;
+  border-radius: var(--r-1);
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  font-weight: 600;
+  font-size: 0.9rem;
+}
+
+.turtle-walk .tw-cmd-F { background: rgba(34, 197, 94, 0.12); border-color: rgba(34, 197, 94, 0.3); }
+.turtle-walk .tw-cmd-L { background: rgba(79, 158, 255, 0.12); border-color: rgba(79, 158, 255, 0.3); }
+.turtle-walk .tw-cmd-R { background: rgba(249, 115, 22, 0.12); border-color: rgba(249, 115, 22, 0.3); }
+
+.turtle-walk .tw-cmd-symbol {
+  margin-right: 0.2rem;
+  font-size: 1.1rem;
+}
+
+.turtle-walk .tw-predict {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.6rem;
+  padding: 1rem;
+  background: rgba(255, 255, 255, 0.04);
+  border-radius: var(--r-1);
+  width: 100%;
+  max-width: 480px;
+}
+
+.turtle-walk .tw-predict-label {
+  font-size: 0.9rem;
+  opacity: 0.8;
+}
+
+.turtle-walk .tw-predict-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.6rem;
+  align-items: flex-end;
+  justify-content: center;
+}
+
+.turtle-walk .tw-field {
+  display: flex;
+  flex-direction: column;
+  gap: 0.2rem;
+  font-size: 0.7rem;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  opacity: 0.6;
+}
+
+.turtle-walk .tw-field input,
+.turtle-walk .tw-field select {
+  width: 60px;
+  height: 36px;
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  background: rgba(255, 255, 255, 0.05);
+  color: inherit;
+  border-radius: var(--r-1);
+  font-size: 1rem;
+  text-align: center;
+  font-family: inherit;
+  font-variant-numeric: tabular-nums;
+}
+
+.turtle-walk .tw-field input:focus,
+.turtle-walk .tw-field select:focus {
+  outline: 2px solid var(--blue, #4f9eff);
+  outline-offset: 1px;
+}
+
+.turtle-walk .tw-submit {
+  height: 36px;
+  padding: 0 1rem;
+  border-radius: var(--r-1);
+  background: var(--blue, #4f9eff);
+  color: white;
+  border: none;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.15s ease;
+}
+
+.turtle-walk .tw-submit:hover:not(:disabled) {
+  background: #3b82f6;
+}
+
+.turtle-walk .tw-submit:disabled {
+  background: rgba(255, 255, 255, 0.1);
+  color: rgba(255, 255, 255, 0.4);
+  cursor: not-allowed;
+}
+
+.turtle-walk .tw-result {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 0.7rem;
+  text-align: center;
+  padding: 1.5rem;
+  background: rgba(0, 0, 0, 0.9);
+  border-radius: var(--r-1);
+  z-index: 10;
+  animation: tw-result-appear 0.4s ease;
+}
+
+@keyframes tw-result-appear {
+  from { opacity: 0; transform: scale(0.95); }
+  to   { opacity: 1; transform: scale(1); }
+}
+
+.turtle-walk .tw-result.won .tw-result-title { color: #22c55e; font-size: 2rem; font-weight: 800; }
+.turtle-walk .tw-result.lost .tw-result-title { color: #f97316; font-size: 2rem; font-weight: 800; }
+
+.turtle-walk .tw-result-msg {
+  font-size: 0.95rem;
+  opacity: 0.9;
+  font-variant-numeric: tabular-nums;
+  max-width: 360px;
+}
+
+.turtle-walk .tw-result button {
+  margin-top: 0.5rem;
+  padding: 0.5rem 1.4rem;
+  font-size: 0.9rem;
+  font-weight: 600;
+  border-radius: var(--r-1);
+  background: rgba(255, 255, 255, 0.1);
+  color: white;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  cursor: pointer;
+}
+
+.turtle-walk .tw-result button:hover {
+  background: rgba(255, 255, 255, 0.2);
+}
+
+.turtle-walk .tw-onboard {
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.7);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 11;
+  cursor: pointer;
+}
+
+.turtle-walk .tw-onboard-inner {
+  background: var(--bg, #1a1a1a);
+  padding: 1.5rem 2rem;
+  border-radius: var(--r-1);
+  max-width: 400px;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  gap: 0.8rem;
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
+}
+
+.turtle-walk .tw-onboard-inner strong { font-size: 1.2rem; }
+.turtle-walk .tw-onboard-inner p { opacity: 0.85; line-height: 1.4; }
+.turtle-walk .tw-onboard-inner button {
+  align-self: center;
+  padding: 0.5rem 1.2rem;
+  background: var(--blue, #4f9eff);
+  color: white;
+  border: none;
+  border-radius: var(--r-1);
+  cursor: pointer;
+  font-weight: 500;
+}
+
+.turtle-walk .game-engine-banner {
+  display: none !important;
+}

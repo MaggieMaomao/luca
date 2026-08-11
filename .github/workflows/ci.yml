@@ -1,0 +1,60 @@
+name: CI
+
+# Runs on every push and PR. Validates that the luca monorepo builds
+# and lints cleanly. Tests live in the per-game subdirs and are run
+# separately by smoke tests.
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  build:
+    name: Build + Lint
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Install
+        run: npm install
+
+      - name: Build engine
+        run: npm run build --workspace=@luca-game/engine
+
+      - name: Lint engine
+        run: npm run lint --workspace=@luca-game/engine
+
+      - name: Build platform
+        run: npm run build --workspace=@luca-game/platform
+
+      - name: Lint platform
+        run: npm run lint --workspace=@luca-game/platform
+
+      - name: Type-check (no emit)
+        run: |
+          npm run lint --workspace=@luca-game/engine
+          npm run lint --workspace=@luca-game/platform
+
+      - name: Verify bundledDependencies
+        # Sanity check: the platform should NOT have @luca-game/engine
+        # as a regular dep that the consumer needs to install
+        # (it'll be bundled on the npm side via the @luca-game/engine
+        # dependency).
+        run: |
+          node -e '
+            const pkg = require("./packages/platform/package.json");
+            const deps = pkg.dependencies || {};
+            if (!deps["@luca-game/engine"]) {
+              console.error("::error::platform must depend on @luca-game/engine");
+              process.exit(1);
+            }
+            console.log("OK: platform depends on @luca-game/engine", deps["@luca-game/engine"]);
+          '

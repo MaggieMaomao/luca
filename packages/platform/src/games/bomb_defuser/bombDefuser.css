@@ -1,0 +1,318 @@
+/* Bomb Defuser — visual styles
+ *
+ * 4 colored wires hanging from a black bomb device. Big timer
+ * counts down; turns red and pulses when < 10s. Click a wire to
+ * cut it. Wrong wire or timer = BOOM. Right wire = DEFUSED.
+ */
+
+.bomb-defuser .bomb-wrap {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1.5rem;
+  padding: 1rem 0.5rem;
+  user-select: none;
+  position: relative;
+}
+
+/* ── Header: timer + clue ───────────────────────────────────── */
+
+.bomb-defuser .bomb-header {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
+  width: min(100%, 480px);
+}
+
+.bomb-defuser .bomb-timer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.3rem;
+  padding: 0.8rem 1.6rem;
+  border-radius: var(--r-1);
+  background: rgba(255, 255, 255, 0.05);
+  border: 2px solid rgba(255, 255, 255, 0.15);
+  min-width: 160px;
+  transition: all 0.2s ease;
+}
+
+.bomb-defuser .bomb-timer[data-low="low"] {
+  background: rgba(239, 68, 68, 0.15);
+  border-color: #ef4444;
+  color: #fca5a5;
+  animation: bomb-timer-pulse 0.5s ease-in-out infinite alternate;
+}
+
+@keyframes bomb-timer-pulse {
+  from { transform: scale(1); }
+  to   { transform: scale(1.05); }
+}
+
+.bomb-defuser .bomb-timer-label {
+  font-size: 0.75rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  opacity: 0.7;
+}
+
+.bomb-defuser .bomb-timer-value {
+  font-size: 2.4rem;
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+  line-height: 1;
+}
+
+.bomb-defuser .bomb-clue {
+  text-align: center;
+  font-size: 0.95rem;
+  line-height: 1.4;
+  max-width: 480px;
+}
+
+.bomb-defuser .bomb-clue-label {
+  font-size: 0.7rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  opacity: 0.6;
+  margin-bottom: 0.2rem;
+}
+
+.bomb-defuser .bomb-clue-text {
+  font-style: italic;
+  opacity: 0.95;
+}
+
+/* ── Bomb device + wires ─────────────────────────────────────── */
+
+.bomb-defuser .bomb-stage {
+  display: flex;
+  justify-content: center;
+  padding: 1rem 0;
+}
+
+.bomb-defuser .bomb-device {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background: linear-gradient(180deg, #1f2937 0%, #111827 100%);
+  padding: 1.5rem 2rem 1rem;
+  border-radius: var(--r-1);
+  box-shadow:
+    0 20px 40px rgba(0, 0, 0, 0.5),
+    inset 0 2px 4px rgba(255, 255, 255, 0.05);
+  min-width: 360px;
+}
+
+.bomb-defuser .bomb-led {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  background: #ef4444;
+  box-shadow: 0 0 8px #ef4444, 0 0 16px rgba(239, 68, 68, 0.4);
+  animation: bomb-led-blink 1s ease-in-out infinite;
+}
+
+.bomb-defuser .bomb-led[data-state="defused"] {
+  background: #22c55e;
+  box-shadow: 0 0 8px #22c55e, 0 0 16px rgba(34, 197, 94, 0.4);
+  animation: none;
+}
+
+.bomb-defuser .bomb-led[data-state="exploded"] {
+  background: #f97316;
+  box-shadow: 0 0 12px #f97316, 0 0 24px rgba(249, 115, 22, 0.6);
+  animation: none;
+}
+
+@keyframes bomb-led-blink {
+  0%, 50% { opacity: 1; }
+  50.01%, 100% { opacity: 0.3; }
+}
+
+.bomb-defuser .bomb-wires {
+  display: flex;
+  gap: 0.8rem;
+  padding: 0.5rem 0;
+}
+
+.bomb-defuser .bomb-wire {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background: transparent;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+  width: 70px;
+  position: relative;
+  transition: transform 0.15s ease;
+}
+
+.bomb-defuser .bomb-wire:hover:not(.cut):not(.disabled) {
+  transform: translateY(2px);
+}
+
+.bomb-defuser .bomb-wire:focus-visible {
+  outline: 2px solid var(--blue, #4f9eff);
+  outline-offset: 4px;
+  border-radius: var(--r-1);
+}
+
+.bomb-defuser .bomb-wire.cut {
+  cursor: not-allowed;
+}
+
+.bomb-defuser .bomb-wire.disabled {
+  cursor: not-allowed;
+  opacity: 0.7;
+}
+
+.bomb-defuser .bomb-wire-cable {
+  width: 12px;
+  height: 140px;
+  border-radius: var(--r-1);
+  box-shadow: inset 0 0 4px rgba(0, 0, 0, 0.3);
+  transition: all 0.3s ease;
+}
+
+.bomb-defuser .bomb-wire.cut .bomb-wire-cable {
+  height: 60px;
+  /* Show it as if cut: clipped at the bottom */
+  mask-image: linear-gradient(to bottom, black 60%, transparent 60%);
+  -webkit-mask-image: linear-gradient(to bottom, black 60%, transparent 60%);
+  filter: grayscale(0.6) brightness(0.6);
+}
+
+.bomb-defuser .bomb-wire-label {
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  margin-top: 0.5rem;
+  color: rgba(255, 255, 255, 0.9);
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.5);
+}
+
+.bomb-defuser .bomb-wire.cut .bomb-wire-label {
+  text-decoration: line-through;
+  opacity: 0.5;
+}
+
+/* ── (Restart is handled by the engine's header button and the
+     result overlay's "Try Again" / "Play Again" buttons. We don't
+     render a third one here to avoid confusion.) ──────────────── */
+
+/* ── Result overlay (BOOM / DEFUSED) ────────────────────────── */
+
+.bomb-defuser .bomb-result {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+  text-align: center;
+  padding: 2rem;
+  background: rgba(0, 0, 0, 0.85);
+  border-radius: var(--r-1);
+  animation: bomb-result-appear 0.4s ease;
+  z-index: 10;
+}
+
+@keyframes bomb-result-appear {
+  from { opacity: 0; transform: scale(0.95); }
+  to   { opacity: 1; transform: scale(1); }
+}
+
+.bomb-defuser .bomb-result.exploded .bomb-result-title {
+  color: #f97316;
+  font-size: 3rem;
+  font-weight: 800;
+  text-shadow: 0 0 20px rgba(249, 115, 22, 0.6);
+}
+
+.bomb-defuser .bomb-result.defused .bomb-result-title {
+  color: #22c55e;
+  font-size: 3rem;
+  font-weight: 800;
+  text-shadow: 0 0 20px rgba(34, 197, 94, 0.6);
+}
+
+.bomb-defuser .bomb-result-msg {
+  font-size: 1rem;
+  opacity: 0.9;
+  max-width: 400px;
+}
+
+.bomb-defuser .bomb-result button {
+  margin-top: 0.5rem;
+  padding: 0.5rem 1.5rem;
+  font-size: 0.9rem;
+  font-weight: 600;
+  border-radius: var(--r-1);
+  background: rgba(255, 255, 255, 0.1);
+  color: white;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  cursor: pointer;
+}
+
+.bomb-defuser .bomb-result button:hover {
+  background: rgba(255, 255, 255, 0.2);
+}
+
+/* Hide the engine's default win/loss banners. We render our own
+ * themed overlay below. */
+.bomb-defuser .game-engine-banner {
+  display: none !important;
+}
+
+/* ── Onboarding overlay ──────────────────────────────────────── */
+
+.bomb-defuser .bomb-onboard {
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.7);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 11;
+  cursor: pointer;
+}
+
+.bomb-defuser .bomb-onboard-inner {
+  background: var(--bg, #1a1a1a);
+  padding: 1.5rem 2rem;
+  border-radius: var(--r-1);
+  max-width: 400px;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  gap: 0.8rem;
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
+}
+
+.bomb-defuser .bomb-onboard-inner strong {
+  font-size: 1.2rem;
+}
+
+.bomb-defuser .bomb-onboard-inner p {
+  opacity: 0.85;
+  line-height: 1.4;
+}
+
+.bomb-defuser .bomb-onboard-inner button {
+  align-self: center;
+  padding: 0.5rem 1.2rem;
+  background: var(--blue, #4f9eff);
+  color: white;
+  border: none;
+  border-radius: var(--r-1);
+  cursor: pointer;
+  font-weight: 500;
+}

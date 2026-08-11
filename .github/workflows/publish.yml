@@ -1,0 +1,147 @@
+name: Publish to npm
+
+# Publishes @luca-game/engine and @luca-game/platform to the public
+# npm registry on tag push. Tag format: luca-v<engine>-<platform>
+# e.g. luca-v0.1.0-0.1.0
+#
+# Why two versions? Each package can be versioned independently. The
+# tag encodes both so a single push publishes both at the right versions.
+#
+# Setup:
+#  1. Create an npm account (https://www.npmjs.com/signup)
+#  2. Either:
+#     a. Join the `luca-game` npm org (the maintainer invites you), OR
+#     b. Publish as your own user (will need to rename packages to
+#        @<your-npm-username>/luca-engine etc.)
+#  3. Create an npm access token: https://www.npmjs.com/settings/<you>/tokens
+#     - Type: "Automation" (not "Publish")
+#  4. Add the token to GitHub repo secrets:
+#     - https://github.com/MaggieMaomao/luca/settings/secrets/actions
+#     - Name: NPM_TOKEN, Value: <the token>
+#
+# Usage:
+#  cd packages/engine && npm version 0.1.1
+#  cd ../platform && npm version 0.1.1
+#  cd ../..
+#  git tag luca-v0.1.1-0.1.1
+#  git push origin main --tags
+#
+# The workflow will:
+#  - Extract engine + platform versions from the tag
+#  - Verify they match package.json
+#  - npm publish each package
+#  - Create a GitHub release with the notes
+
+on:
+  push:
+    tags:
+      - 'luca-v*'
+  workflow_dispatch:
+    inputs:
+      dry_run:
+        description: 'Dry run (build but do not publish)'
+        required: false
+        type: boolean
+        default: false
+
+permissions:
+  contents: write   # needed for `gh release create`
+
+jobs:
+  publish:
+    name: Publish to npm
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0   # need full history for changelog generation
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          registry-url: 'https://registry.npmjs.org'
+
+      - name: Extract versions from tag
+        id: versions
+        run: |
+          TAG="${GITHUB_REF_NAME}"
+          # Strip "luca-v" prefix
+          VERSIONS="${TAG#luca-v}"
+          ENGINE_VERSION="${VERSIONS%-*}"
+          PLATFORM_VERSION="${VERSIONS#*-}"
+          echo "engine_version=$ENGINE_VERSION" >> "$GITHUB_OUTPUT"
+          echo "platform_version=$PLATFORM_VERSION" >> "$GITHUB_OUTPUT"
+          echo "Tag $TAG → engine $ENGINE_VERSION, platform $PLATFORM_VERSION"
+
+      - name: Verify package.json versions
+        run: |
+          ENGINE_PKG_VERSION=$(node -p "require('./packages/engine/package.json').version")
+          PLATFORM_PKG_VERSION=$(node -p "require('./packages/platform/package.json').version")
+          echo "engine pkg.json: $ENGINE_PKG_VERSION"
+          echo "platform pkg.json: $PLATFORM_PKG_VERSION"
+          if [ "$ENGINE_PKG_VERSION" != "${{ steps.versions.outputs.engine_version }}" ]; then
+            echo "::error::engine version mismatch: tag=${{ steps.versions.outputs.engine_version }} pkg=$ENGINE_PKG_VERSION"
+            exit 1
+          fi
+          if [ "$PLATFORM_PKG_VERSION" != "${{ steps.versions.outputs.platform_version }}" ]; then
+            echo "::error::platform version mismatch: tag=${{ steps.versions.outputs.platform_version }} pkg=$PLATFORM_PKG_VERSION"
+            exit 1
+          fi
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Build engine
+        run: npm run build --workspace=@luca-game/engine
+
+      - name: Build platform
+        run: npm run build --workspace=@luca-game/platform
+
+      - name: Test engine
+        run: npm test --workspace=@luca-game/engine
+
+      - name: Test platform
+        run: npm test --workspace=@luca-game/platform
+
+      - name: Publish engine (dry run)
+        if: ${{ inputs.dry_run == 'true' || github.event_name == 'workflow_dispatch' }}
+        run: |
+          cd packages/engine
+          npm publish --dry-run --provenance
+        continue-on-error: false
+
+      - name: Publish engine
+        if: ${{ inputs.dry_run != 'true' && github.event_name == 'push' }}
+        run: |
+          cd packages/engine
+          npm publish --provenance
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+
+      - name: Publish platform (dry run)
+        if: ${{ inputs.dry_run == 'true' || github.event_name == 'workflow_dispatch' }}
+        run: |
+          cd packages/platform
+          npm publish --dry-run --provenance
+        continue-on-error: false
+
+      - name: Publish platform
+        if: ${{ inputs.dry_run != 'true' && github.event_name == 'push' }}
+        run: |
+          cd packages/platform
+          npm publish --provenance
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+
+      - name: Create GitHub release
+        if: ${{ github.event_name == 'push' }}
+        uses: softprops/action-gh-release@v2
+        with:
+          tag_name: ${{ github.ref_name }}
+          generate_release_notes: true
+          draft: false
+          prerelease: ${{ contains(github.ref_name, '-rc') || contains(github.ref_name, '-beta') || contains(github.ref_name, '-alpha') }}
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

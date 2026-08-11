@@ -1,0 +1,141 @@
+/* Tangram — visual styles
+ *
+ * A board with a faded target-shape outline, and 7 draggable
+ * colored pieces. Pieces lock (turn green-bordered) when they
+ * exactly cover their target cells.
+ */
+
+.tangram .tangram-wrap {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
+  padding: 1rem 0.5rem;
+  user-select: none;
+}
+
+/* ── Header ──────────────────────────────────────────────────── */
+
+.tangram .tangram-header {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.4rem;
+  font-size: 0.9rem;
+}
+
+.tangram .tangram-target-label {
+  font-size: 1rem;
+}
+
+.tangram .tangram-progress {
+  opacity: 0.7;
+  font-size: 0.85rem;
+}
+
+/* ── Board ──────────────────────────────────────────────────── */
+
+.tangram .tangram-board {
+  position: relative;
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: var(--r-1);
+  background-image:
+    linear-gradient(rgba(255, 255, 255, 0.04) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.04) 1px, transparent 1px);
+  background-size: 32px 32px;
+  box-shadow: inset 0 2px 8px rgba(0, 0, 0, 0.2);
+}
+
+.tangram .tangram-target-overlay {
+  position: absolute;
+  border: 2px dashed rgba(255, 255, 255, 0.3);
+  background: rgba(255, 255, 255, 0.02);
+  border-radius: var(--r-1);
+  pointer-events: none;
+}
+
+/* ── Pieces ─────────────────────────────────────────────────── */
+
+.tangram .tangram-piece {
+  position: absolute;
+  cursor: grab;
+  touch-action: none;
+}
+
+.tangram .tangram-piece:active {
+  cursor: grabbing;
+}
+
+.tangram .tangram-cell {
+  position: absolute;
+  border: 1px solid rgba(0, 0, 0, 0.2);
+  border-radius: var(--r-1);
+  box-shadow: inset 0 -2px 4px rgba(0, 0, 0, 0.2);
+}
+
+.tangram .tangram-piece.locked .tangram-cell {
+  border: 2px solid #22c55e;
+  box-shadow: 0 0 0 2px rgba(34, 197, 94, 0.4), inset 0 -2px 4px rgba(0, 0, 0, 0.2);
+}
+
+/* ── Controls ────────────────────────────────────────────────── */
+
+.tangram .tangram-controls {
+  display: flex;
+  gap: 1rem;
+  align-items: center;
+  font-size: 0.9rem;
+}
+
+.tangram .tangram-controls select,
+.tangram .tangram-controls button {
+  font-size: 0.9rem;
+  padding: 0.3rem 0.7rem;
+  border-radius: var(--r-1);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  background: rgba(255, 255, 255, 0.05);
+  color: inherit;
+  cursor: pointer;
+}
+
+.tangram .tangram-controls button:disabled,
+.tangram .tangram-controls select:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+/* ── Onboarding overlay ──────────────────────────────────────── */
+
+.tangram .tangram-onboard {
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.7);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 10;
+  cursor: pointer;
+}
+
+.tangram .tangram-onboard-inner {
+  background: var(--bg, #1a1a1a);
+  padding: 1.5rem 2rem;
+  border-radius: var(--r-1);
+  max-width: 400px;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  gap: 0.8rem;
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
+}
+
+.tangram .tangram-onboard-inner button {
+  align-self: center;
+  padding: 0.5rem 1.2rem;
+  background: var(--blue, #4f9eff);
+  color: white;
+  border: none;
+  border-radius: var(--r-1);
+  cursor: pointer;
+  font-weight: 500;
+}

@@ -1,0 +1,200 @@
+{
+  "game": "lights",
+  "cases": [
+    {
+      "name": "all off (reported)",
+      "state": [
+        [
+          false,
+          false,
+          false,
+          false,
+          false
+        ],
+        [
+          false,
+          false,
+          false,
+          false,
+          false
+        ],
+        [
+          false,
+          false,
+          false,
+          false,
+          false
+        ],
+        [
+          false,
+          false,
+          false,
+          false,
+          false
+        ],
+        [
+          false,
+          false,
+          false,
+          false,
+          false
+        ]
+      ],
+      "reportedComplete": true,
+      "expect": {
+        "complete": true
+      }
+    },
+    {
+      "name": "all off (under-reported)",
+      "state": [
+        [
+          false,
+          false,
+          false,
+          false,
+          false
+        ],
+        [
+          false,
+          false,
+          false,
+          false,
+          false
+        ],
+        [
+          false,
+          false,
+          false,
+          false,
+          false
+        ],
+        [
+          false,
+          false,
+          false,
+          false,
+          false
+        ],
+        [
+          false,
+          false,
+          false,
+          false,
+          false
+        ]
+      ],
+      "reportedComplete": false,
+      "expect": {
+        "complete": true
+      }
+    },
+    {
+      "name": "one light on",
+      "state": [
+        [
+          false,
+          false,
+          false,
+          false,
+          false
+        ],
+        [
+          false,
+          false,
+          false,
+          false,
+          false
+        ],
+        [
+          false,
+          false,
+          true,
+          false,
+          false
+        ],
+        [
+          false,
+          false,
+          false,
+          false,
+          false
+        ],
+        [
+          false,
+          false,
+          false,
+          false,
+          false
+        ]
+      ],
+      "reportedComplete": false,
+      "expect": {
+        "complete": false
+      }
+    },
+    {
+      "name": "cheat: reports complete with a light on",
+      "state": [
+        [
+          false,
+          false,
+          false,
+          false,
+          false
+        ],
+        [
+          false,
+          false,
+          false,
+          false,
+          false
+        ],
+        [
+          false,
+          false,
+          true,
+          false,
+          false
+        ],
+        [
+          false,
+          false,
+          false,
+          false,
+          false
+        ],
+        [
+          false,
+          false,
+          false,
+          false,
+          false
+        ]
+      ],
+      "reportedComplete": true,
+      "expect": {
+        "complete": false,
+        "errorCode": "CHEAT_DETECTED"
+      }
+    },
+    {
+      "name": "malformed (wrong size, not all-off)",
+      "state": [
+        [
+          true,
+          false
+        ],
+        [
+          false,
+          false
+        ]
+      ],
+      "reportedComplete": true,
+      "expect": {
+        "complete": false,
+        "errorCode": "INVALID_STATE"
+      }
+    }
+  ]
+}

@@ -1,0 +1,130 @@
+{
+  "game": "sliding_blocks",
+  "cases": [
+    {
+      "name": "solved (reported)",
+      "state": [
+        [
+          1,
+          2,
+          3
+        ],
+        [
+          4,
+          5,
+          6
+        ],
+        [
+          7,
+          8,
+          0
+        ]
+      ],
+      "finalStats": {
+        "moves": 10
+      },
+      "reportedComplete": true,
+      "expect": {
+        "complete": true
+      }
+    },
+    {
+      "name": "solved (under-reported)",
+      "state": [
+        [
+          1,
+          2,
+          3
+        ],
+        [
+          4,
+          5,
+          6
+        ],
+        [
+          7,
+          8,
+          0
+        ]
+      ],
+      "reportedComplete": false,
+      "expect": {
+        "complete": true
+      }
+    },
+    {
+      "name": "reachable but not solved",
+      "state": [
+        [
+          1,
+          2,
+          3
+        ],
+        [
+          4,
+          5,
+          6
+        ],
+        [
+          7,
+          0,
+          8
+        ]
+      ],
+      "reportedComplete": false,
+      "expect": {
+        "complete": false
+      }
+    },
+    {
+      "name": "cheat: reports complete but unsolved",
+      "state": [
+        [
+          1,
+          2,
+          3
+        ],
+        [
+          4,
+          5,
+          6
+        ],
+        [
+          7,
+          0,
+          8
+        ]
+      ],
+      "reportedComplete": true,
+      "expect": {
+        "complete": false,
+        "errorCode": "CHEAT_DETECTED"
+      }
+    },
+    {
+      "name": "malformed (value out of range)",
+      "state": [
+        [
+          1,
+          2,
+          3
+        ],
+        [
+          4,
+          5,
+          6
+        ],
+        [
+          7,
+          8,
+          9
+        ]
+      ],
+      "reportedComplete": true,
+      "expect": {
+        "complete": false,
+        "errorCode": "INVALID_STATE"
+      }
+    }
+  ]
+}

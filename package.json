@@ -1,0 +1,22 @@
+{
+  "name": "luca",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Open-source game platform: engine + collection of games. MIT-licensed.",
+  "workspaces": [
+    "packages/*"
+  ],
+  "scripts": {
+    "build": "npm run build --workspaces --if-present",
+    "test": "npm run test --workspaces --if-present",
+    "lint": "npm run lint --workspaces --if-present",
+    "clean": "rm -rf packages/*/dist packages/*/.tsbuildinfo"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  },
+  "license": "MIT",
+  "devDependencies": {
+    "ts-node": "^10.9.2"
+  }
+}

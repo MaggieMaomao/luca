@@ -1,0 +1,170 @@
+{
+  "game": "magic_square",
+  "cases": [
+    {
+      "name": "valid magic square (reported)",
+      "state": {
+        "size": 3,
+        "grid": [
+          2,
+          7,
+          6,
+          9,
+          5,
+          1,
+          4,
+          3,
+          8
+        ],
+        "prefilled": [
+          true,
+          true,
+          true,
+          true,
+          true,
+          true,
+          true,
+          true,
+          true
+        ],
+        "moves": 4
+      },
+      "reportedComplete": true,
+      "expect": {
+        "complete": true
+      }
+    },
+    {
+      "name": "valid magic square (under-reported)",
+      "state": {
+        "size": 3,
+        "grid": [
+          2,
+          7,
+          6,
+          9,
+          5,
+          1,
+          4,
+          3,
+          8
+        ],
+        "prefilled": [
+          true,
+          true,
+          true,
+          true,
+          true,
+          true,
+          true,
+          true,
+          true
+        ],
+        "moves": 4
+      },
+      "reportedComplete": false,
+      "expect": {
+        "complete": true
+      }
+    },
+    {
+      "name": "permutation but not magic",
+      "state": {
+        "size": 3,
+        "grid": [
+          2,
+          7,
+          6,
+          9,
+          5,
+          1,
+          4,
+          8,
+          3
+        ],
+        "prefilled": [
+          true,
+          true,
+          true,
+          true,
+          true,
+          true,
+          true,
+          true,
+          true
+        ],
+        "moves": 4
+      },
+      "reportedComplete": false,
+      "expect": {
+        "complete": false
+      }
+    },
+    {
+      "name": "cheat: reports complete but not magic",
+      "state": {
+        "size": 3,
+        "grid": [
+          2,
+          7,
+          6,
+          9,
+          5,
+          1,
+          4,
+          8,
+          3
+        ],
+        "prefilled": [
+          true,
+          true,
+          true,
+          true,
+          true,
+          true,
+          true,
+          true,
+          true
+        ],
+        "moves": 4
+      },
+      "reportedComplete": true,
+      "expect": {
+        "complete": false,
+        "errorCode": "CHEAT_DETECTED"
+      }
+    },
+    {
+      "name": "malformed (grid wrong length)",
+      "state": {
+        "size": 3,
+        "grid": [
+          2,
+          7,
+          6,
+          9,
+          5,
+          1,
+          4,
+          3
+        ],
+        "prefilled": [
+          true,
+          true,
+          true,
+          true,
+          true,
+          true,
+          true,
+          true
+        ],
+        "moves": 0
+      },
+      "reportedComplete": true,
+      "expect": {
+        "complete": false,
+        "errorCode": "INVALID_STATE"
+      }
+    }
+  ]
+}

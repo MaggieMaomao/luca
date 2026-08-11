@@ -1,0 +1,456 @@
+/* Sudoku — CatoBigato-native visual identity
+ *
+ * Design philosophy (mirrors 2048 design pattern):
+ * - Board uses math-blue tinted "recessed gap" so the 9x9 cells
+ *   are clearly distinct in both light AND dark modes. The
+ *   3-shade progression (board > empty > cell) reads as "recessed
+ *   grid with cells inside".
+ * - Thick 3x3 box borders use math-blue (matches the brand color
+ *   of the game).
+ * - Given cells: dark/light text depending on theme, on the same
+ *   blue-tinted surface as the rest.
+ * - User-entered cells: warm yellow (matching 2048) so the player's
+ *   marks stand out visually against the brand-blue givens.
+ * - No color transitions on cell text — prevents flash when typing
+ *   a new value into a cell.
+ *
+ * Why not --ink / --rule-soft? They share tones and cells vanish
+ * in dark mode. Use dedicated per-theme math-blue instead.
+ */
+
+.sudoku {
+  max-width: 480px;  /* reduced from 540px — fits in tighter viewports */
+  margin: 0 auto;
+  padding: 12px;     /* reduced from 16px — saves 8px vertical */
+  user-select: none;
+  -webkit-user-select: none;
+}
+
+/* Stats */
+
+.sudoku-stats {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 12px;
+}
+
+.sudoku-stat {
+  flex: 1;
+  background: var(--bg-2);
+  border: 1px solid var(--rule-soft);
+  border-radius: var(--r-1);
+  padding: 6px 10px;
+  text-align: center;
+}
+
+.sudoku-stat-label {
+  font-size: 9px;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--ink-muted);
+  font-weight: 600;
+}
+
+.sudoku-stat-value {
+  font-size: 18px;
+  font-weight: 700;
+  color: var(--ink);
+  line-height: 1.1;
+  margin-top: 2px;
+  text-transform: capitalize;
+}
+
+/* Onboarding card (first time) — compact horizontal layout
+ *
+ * Layout: [icon] [title | intro+rules] [dismiss button]
+ * Renders inline next to the page rather than as a tall stacked
+ * block. This keeps the page fitting in a typical viewport
+ * (~800px tall) without scrolling even on the very first visit.
+ *
+ * Breakpoint: on narrow screens (<520px container), the flex
+ * direction falls back to the same vertical layout as the other
+ * games' onboard cards.
+ */
+
+.sudoku-onboard {
+  background: var(--bg-2);
+  border: 1px solid var(--rule-soft);
+  border-left: 3px solid var(--c-math);
+  border-radius: var(--r-1);
+  padding: 10px 14px;
+  margin-bottom: 10px;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 10px 14px;
+}
+
+.sudoku-onboard-icon {
+  font-size: 22px;
+  line-height: 1;
+  flex-shrink: 0;
+  color: var(--c-math);
+  font-weight: 700;
+  width: 26px;
+  height: 26px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--bg);
+  border: 1px solid var(--rule-soft);
+  border-radius: var(--r-1);
+}
+
+[data-theme="dark"] .sudoku-onboard-icon {
+  color: #6E8FD6;
+}
+
+.sudoku-onboard-body {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 4px 12px;
+}
+
+.sudoku-onboard-title {
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--ink);
+  margin: 0;
+  line-height: 1.3;
+  flex-shrink: 0;
+}
+
+.sudoku-onboard-text {
+  font-size: 11px;
+  color: var(--ink-muted);
+  line-height: 1.3;
+  margin: 0;
+  flex-basis: 100%;  /* pushes the rules list to a new line on wide screens */
+  order: 3;         /* always render after the rules on wrap */
+}
+
+.sudoku-onboard-rules {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  gap: 4px 12px;
+  font-size: 11px;
+  color: var(--ink-soft);
+  margin: 0;
+  padding-left: 0;
+  list-style: none;
+  order: 2;  /* rules render in the middle, before the text */
+}
+
+.sudoku-onboard-rules li {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.sudoku-onboard-rules li::before {
+  content: "•";
+  color: var(--c-math);
+  font-weight: 700;
+  flex-shrink: 0;
+}
+
+[data-theme="dark"] .sudoku-onboard-rules li::before {
+  color: #6E8FD6;
+}
+
+.sudoku-onboard-actions {
+  display: flex;
+  gap: 8px;
+  flex-shrink: 0;
+  margin-left: auto;  /* push to the right end of the card */
+}
+
+/* Difficulty picker chips — pill shape (var(--r-round)) */
+
+.sudoku-difficulty-picker {
+  display: flex;
+  gap: 6px;
+  justify-content: center;
+  margin-bottom: 12px;
+}
+
+.sudoku-diff-chip {
+  padding: 6px 14px;
+  background: var(--bg-2);
+  border: 1px solid var(--rule);
+  color: var(--ink);
+  border-radius: var(--r-round);
+  font-size: 12px;
+  font-weight: 500;
+  cursor: pointer;
+  font-family: inherit;
+  text-transform: capitalize;
+  transition: background 0.1s ease;
+}
+
+.sudoku-diff-chip:hover {
+  background: var(--rule-soft);
+}
+
+.sudoku-diff-chip-on {
+  background: var(--c-math);
+  border-color: var(--c-math);
+  color: #fff;
+}
+
+[data-theme="dark"] .sudoku-diff-chip-on {
+  color: #1B1410;  /* dark text on the math blue in dark mode */
+}
+
+.sudoku-diff-chip-on:hover {
+  background: #3D5BC2;
+  border-color: #3D5BC2;
+}
+
+/* 9x9 grid with math-blue "recessed gap" (mirrors 2048 design) */
+
+.sudoku-grid {
+  display: grid;
+  grid-template-columns: repeat(9, 1fr);
+  gap: 0;
+  background: #D7DEEF;  /* light math-blue gap (between cells) */
+  border: 2px solid #4B6FE0;  /* thick brand-math-blue border */
+  border-radius: var(--r-1);
+  overflow: hidden;
+  aspect-ratio: 1;
+  margin-bottom: 8px;  /* reduced from 12px */
+}
+
+[data-theme="dark"] .sudoku-grid {
+  background: #2A3656;  /* dark math-blue gap */
+  border-color: #4B6FE0;  /* same brand-blue border (mid-tone works in both) */
+}
+
+/* Cell — math-blue surface, slightly lighter than the gap */
+
+.sudoku-cell {
+  background: #EBEEF7;  /* light math-blue cell */
+  border: 0.5px solid #C5D0E8;
+  border-top: none;
+  border-left: none;
+  font-size: 18px;
+  font-weight: 800;  /* heavier for the yellow user-entered digits */
+  color: var(--ink);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+  font-family: inherit;
+  /* Background-only transition — no color flash when typing */
+  transition: background 0.1s ease;
+  aspect-ratio: 1;
+}
+
+[data-theme="dark"] .sudoku-cell {
+  background: #1F2A45;  /* dark math-blue cell */
+  border-color: #3D4F77;
+}
+
+.sudoku-cell:active {
+  background: var(--rule-soft);
+}
+
+/* Thick 3x3 box borders — math-blue */
+
+.sudoku-cell-box-top    { border-top: 2px solid #4B6FE0; }
+.sudoku-cell-box-bottom { border-bottom: 2px solid #4B6FE0; }
+.sudoku-cell-box-left   { border-left: 2px solid #4B6FE0; }
+.sudoku-cell-box-right  { border-right: 2px solid #4B6FE0; }
+
+[data-theme="dark"] .sudoku-cell-box-top    { border-top-color: #6E8FD6; }
+[data-theme="dark"] .sudoku-cell-box-bottom { border-bottom-color: #6E8FD6; }
+[data-theme="dark"] .sudoku-cell-box-left   { border-left-color: #6E8FD6; }
+[data-theme="dark"] .sudoku-cell-box-right  { border-right-color: #6E8FD6; }
+
+/* Given (pre-filled) cells — deep amber on light math-blue
+ * (matches 2048's tile-2 through tile-8 color exactly)
+ * Bold weight differentiates them from user-entered cells. */
+
+.sudoku-cell-given {
+  font-weight: 800;
+  color: #C97A1A;  /* deep amber — same as 2048 tile values 2-8 */
+  cursor: default;
+}
+
+.sudoku-cell-given:hover {
+  background: #EBEEF7;
+}
+
+[data-theme="dark"] .sudoku-cell-given:hover {
+  background: #1F2A45;
+}
+
+/* User-entered cells — deep amber (slightly less weight to read
+ * as "I added this, not the puzzle")
+ * (matches 2048's yellow on blue pattern) */
+
+.sudoku-cell-user {
+  color: #C97A1A;  /* deep amber — same as 2048 tile values 2-8 */
+  font-weight: 600;
+}
+
+/* Selected cell — math-blue highlight with thin yellow outline */
+
+.sudoku-cell-selected {
+  background: rgba(75, 111, 224, 0.18) !important;
+  outline: 2px solid #FBCB5A;
+  outline-offset: -2px;
+  z-index: 2;
+}
+
+[data-theme="dark"] .sudoku-cell-selected {
+  background: rgba(110, 143, 214, 0.22) !important;
+  outline-color: #FFD580;
+}
+
+/* Conflict state */
+
+.sudoku-cell-conflict {
+  background: rgba(239, 68, 68, 0.18) !important;
+  color: #b91c1c !important;
+}
+
+[data-theme="dark"] .sudoku-cell-conflict {
+  color: #fca5a5 !important;
+}
+
+/* Number pad */
+
+.sudoku-number-pad {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 6px;
+  margin-bottom: 8px;  /* reduced from 12px */
+}
+
+.sudoku-num {
+  background: var(--bg-2);
+  border: 1px solid var(--rule);
+  color: var(--ink);
+  border-radius: var(--r-1);
+  padding: 8px 0;  /* reduced from 10px */
+  font-size: 16px;
+  font-weight: 800;
+  cursor: pointer;
+  font-family: inherit;
+  transition: background 0.1s ease;
+}
+
+.sudoku-num:hover:not(:disabled) {
+  background: rgba(75, 111, 224, 0.08);
+  border-color: var(--c-math);
+}
+
+.sudoku-num:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+.sudoku-num-erase {
+  font-size: 18px;
+}
+
+/* Actions row */
+
+.sudoku-actions {
+  display: flex;
+  gap: 8px;
+  justify-content: center;
+}
+
+/* Help overlay */
+
+.sudoku-help {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 100;
+  padding: 16px;
+}
+
+.sudoku-help-card {
+  background: var(--bg);
+  border: 1px solid var(--rule);
+  border-radius: var(--r-1);
+  padding: 24px 28px;
+  max-width: 440px;
+  width: 100%;
+  max-height: 90vh;
+  overflow-y: auto;
+  box-shadow: 0 20px 50px -12px rgba(0, 0, 0, 0.4);
+}
+
+.sudoku-help-card h3 {
+  margin: 0 0 6px;
+  font-size: 22px;
+  color: var(--ink);
+}
+
+.sudoku-help-card h4 {
+  margin: 18px 0 8px;
+  font-size: 13px;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--c-math);
+  font-weight: 700;
+}
+
+[data-theme="dark"] .sudoku-help-card h4 {
+  color: #6E8FD6;
+}
+
+.sudoku-help-card p {
+  margin: 0 0 8px;
+  font-size: 14px;
+  color: var(--ink);
+  line-height: 1.5;
+}
+
+.sudoku-help-card ul {
+  margin: 0 0 12px;
+  padding-left: 0;
+  list-style: none;
+  font-size: 13px;
+  color: var(--ink);
+  line-height: 1.8;
+}
+
+.sudoku-help-card kbd {
+  display: inline-block;
+  padding: 1px 6px;
+  background: var(--rule-soft);
+  border: 1px solid var(--rule);
+  border-radius: var(--r-1);
+  font-family: monospace;
+  font-size: 11px;
+  margin: 0 1px;
+}
+
+.sudoku-help-target {
+  background: var(--rule-soft);
+  padding: 8px 10px;
+  border-radius: var(--r-1);
+  margin: 8px 0 12px !important;
+  font-size: 12px !important;
+  color: var(--ink-muted) !important;
+}
+
+@media (max-width: 540px) {
+  .sudoku { padding: 8px; }
+  .sudoku-cell { font-size: 14px; }
+  .sudoku-number-pad { grid-template-columns: repeat(5, 1fr); }
+}

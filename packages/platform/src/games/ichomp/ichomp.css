@@ -1,0 +1,185 @@
+/* iChomp — visual styles */
+
+.ichomp .ich-wrap {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
+  padding: 1rem;
+  user-select: none;
+  position: relative;
+}
+
+.ichomp .ich-size {
+  display: flex;
+  align-items: flex-end;
+  gap: 0.6rem;
+}
+
+.ichomp .ich-size-field {
+  display: flex;
+  flex-direction: column;
+  gap: 0.2rem;
+  font-size: 0.75rem;
+  opacity: 0.85;
+}
+
+.ichomp .ich-size-field select {
+  font-size: 0.9rem;
+  padding: 0.25rem 0.4rem;
+  border-radius: var(--r-1);
+  background: rgba(255, 255, 255, 0.06);
+  color: inherit;
+  border: 1px solid rgba(255, 255, 255, 0.15);
+}
+
+.ichomp .ich-size-x {
+  font-size: 1rem;
+  opacity: 0.5;
+  padding-bottom: 0.3rem;
+}
+
+.ichomp .ich-info {
+  display: flex;
+  align-items: baseline;
+  gap: 0.5rem;
+  font-size: 0.9rem;
+  padding: 0.3rem 0.8rem;
+  background: rgba(255, 255, 255, 0.04);
+  border-radius: var(--r-1);
+}
+
+.ichomp .ich-label {
+  opacity: 0.7;
+  font-size: 0.85rem;
+}
+
+.ichomp .ich-value {
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+}
+
+.ichomp .ich-spacer { width: 0.8rem; }
+.ichomp .ich-turn { font-size: 0.8rem; opacity: 0.7; }
+
+.ichomp .ich-grid {
+  display: grid;
+  gap: 4px;
+  background: rgba(255, 255, 255, 0.1);
+  padding: 4px;
+  border-radius: var(--r-1);
+  width: 100%;
+  max-width: 360px;
+  aspect-ratio: 1;
+}
+
+.ichomp .ich-cell {
+  background: #22c55e;
+  color: white;
+  border: none;
+  border-radius: var(--r-1);
+  font-size: 1.2rem;
+  cursor: pointer;
+  transition: all 0.1s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  aspect-ratio: 1;
+}
+
+.ichomp .ich-cell:hover:not(:disabled):not(.eaten):not(.poison) {
+  background: #16a34a;
+  transform: scale(0.95);
+}
+
+.ichomp .ich-cell.eaten {
+  background: rgba(255, 255, 255, 0.04);
+  cursor: not-allowed;
+}
+
+.ichomp .ich-cell.poison {
+  background: #dc2626;
+  font-size: 1.4rem;
+}
+
+.ichomp .ich-cell.disabled {
+  cursor: not-allowed;
+}
+
+.ichomp .ich-result {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 0.7rem;
+  text-align: center;
+  padding: 2rem;
+  background: rgba(0, 0, 0, 0.9);
+  border-radius: var(--r-1);
+  z-index: 10;
+  animation: ich-result-appear 0.4s ease;
+}
+
+@keyframes ich-result-appear {
+  from { opacity: 0; transform: scale(0.95); }
+  to   { opacity: 1; transform: scale(1); }
+}
+
+.ichomp .ich-result.won .ich-result-title { color: #22c55e; font-size: 2.2rem; font-weight: 800; }
+.ichomp .ich-result.lost .ich-result-title { color: #ef4444; font-size: 2.2rem; font-weight: 800; }
+
+.ichomp .ich-result-msg { font-size: 0.95rem; opacity: 0.9; }
+
+.ichomp .ich-result button {
+  margin-top: 0.5rem;
+  padding: 0.5rem 1.4rem;
+  font-size: 0.9rem;
+  font-weight: 600;
+  border-radius: var(--r-1);
+  background: rgba(255, 255, 255, 0.1);
+  color: white;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  cursor: pointer;
+}
+
+.ichomp .ich-result button:hover { background: rgba(255, 255, 255, 0.2); }
+
+.ichomp .ich-onboard {
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.7);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 11;
+  cursor: pointer;
+}
+
+.ichomp .ich-onboard-inner {
+  background: var(--bg, #1a1a1a);
+  padding: 1.5rem 2rem;
+  border-radius: var(--r-1);
+  max-width: 400px;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  gap: 0.8rem;
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
+}
+
+.ichomp .ich-onboard-inner strong { font-size: 1.2rem; }
+.ichomp .ich-onboard-inner p { opacity: 0.85; line-height: 1.4; }
+.ichomp .ich-onboard-inner button {
+  align-self: center;
+  padding: 0.5rem 1.2rem;
+  background: var(--blue, #4f9eff);
+  color: white;
+  border: none;
+  border-radius: var(--r-1);
+  cursor: pointer;
+  font-weight: 500;
+}
+
+.ichomp .game-engine-banner { display: none !important; }

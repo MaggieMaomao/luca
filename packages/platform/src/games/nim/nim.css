@@ -1,0 +1,273 @@
+/* Nim — visual styles
+ *
+ * Three columns of stacked stones, color-coded by pile. Click a pile
+ * to select it, then click a number button to take that many stones.
+ * The game shows a "Hint" button to suggest the optimal move.
+ */
+
+.nim .nim-wrap {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1.2rem;
+  padding: 1rem;
+  user-select: none;
+  position: relative;
+  min-height: 320px;
+}
+
+.nim .nim-piles {
+  display: flex;
+  gap: 1rem;
+  justify-content: center;
+  width: 100%;
+  max-width: 640px;
+}
+
+.nim .nim-pile {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.6rem;
+  background: rgba(255, 255, 255, 0.04);
+  border: 2px solid transparent;
+  border-radius: var(--r-1);
+  padding: 0.8rem 0.5rem;
+  cursor: pointer;
+  transition: all 0.15s ease;
+  min-height: 200px;
+}
+
+.nim .nim-pile:hover:not(:disabled) {
+  background: rgba(255, 255, 255, 0.08);
+  border-color: rgba(255, 255, 255, 0.15);
+}
+
+.nim .nim-pile.selected {
+  background: rgba(79, 158, 255, 0.12);
+  border-color: var(--blue, #4f9eff);
+}
+
+.nim .nim-pile.empty {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+.nim .nim-pile-label {
+  font-size: 0.8rem;
+  font-weight: 600;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  opacity: 0.7;
+}
+
+.nim .nim-pile-stones {
+  display: flex;
+  flex-direction: column-reverse;
+  align-items: center;
+  gap: 2px;
+  flex: 1;
+  justify-content: flex-end;
+  width: 100%;
+}
+
+.nim .nim-stone {
+  width: 32px;
+  height: 14px;
+  border-radius: 50%;
+  box-shadow:
+    inset 0 -2px 2px rgba(0, 0, 0, 0.2),
+    inset 0 2px 2px rgba(255, 255, 255, 0.2),
+    0 1px 2px rgba(0, 0, 0, 0.2);
+}
+
+.nim .nim-pile-empty {
+  font-size: 1.2rem;
+  opacity: 0.5;
+  margin-top: 0.5rem;
+}
+
+/* ── Take controls ──────────────────────────────────────────── */
+
+.nim .nim-take {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.6rem;
+  padding: 0.8rem 1.2rem;
+  background: rgba(79, 158, 255, 0.08);
+  border-radius: var(--r-1);
+  width: 100%;
+  max-width: 480px;
+}
+
+.nim .nim-take-label {
+  font-size: 0.85rem;
+  opacity: 0.8;
+}
+
+.nim .nim-take-buttons {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+  justify-content: center;
+}
+
+.nim .nim-take-btn {
+  min-width: 36px;
+  height: 36px;
+  border-radius: var(--r-1);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  background: rgba(255, 255, 255, 0.05);
+  color: inherit;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.1s ease;
+}
+
+.nim .nim-take-btn:hover:not(:disabled) {
+  background: rgba(79, 158, 255, 0.2);
+  border-color: var(--blue, #4f9eff);
+}
+
+.nim .nim-take-btn.selected {
+  background: var(--blue, #4f9eff);
+  color: white;
+  border-color: var(--blue, #4f9eff);
+}
+
+/* ── Action bar ─────────────────────────────────────────────── */
+
+.nim .nim-actions {
+  display: flex;
+  gap: 0.6rem;
+  justify-content: center;
+}
+
+.nim .nim-btn {
+  padding: 0.5rem 1.2rem;
+  border-radius: var(--r-1);
+  border: none;
+  font-weight: 500;
+  font-size: 0.9rem;
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.nim .nim-btn-secondary {
+  background: rgba(255, 255, 255, 0.06);
+  color: inherit;
+  border: 1px solid rgba(255, 255, 255, 0.15);
+}
+
+.nim .nim-btn-secondary:hover:not(:disabled) {
+  background: rgba(255, 255, 255, 0.1);
+}
+
+/* ── Result overlay ─────────────────────────────────────────── */
+
+.nim .nim-result {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+  text-align: center;
+  padding: 2rem;
+  background: rgba(0, 0, 0, 0.85);
+  border-radius: var(--r-1);
+  z-index: 10;
+  animation: nim-result-appear 0.4s ease;
+}
+
+@keyframes nim-result-appear {
+  from { opacity: 0; transform: scale(0.95); }
+  to   { opacity: 1; transform: scale(1); }
+}
+
+.nim .nim-result.won .nim-result-title {
+  color: #22c55e;
+  font-size: 2.4rem;
+  font-weight: 800;
+}
+
+.nim .nim-result.lost .nim-result-title {
+  color: #f97316;
+  font-size: 2.4rem;
+  font-weight: 800;
+}
+
+.nim .nim-result-msg {
+  font-size: 1rem;
+  opacity: 0.9;
+  max-width: 360px;
+}
+
+.nim .nim-result button {
+  margin-top: 0.5rem;
+  padding: 0.5rem 1.4rem;
+  font-size: 0.9rem;
+  font-weight: 600;
+  border-radius: var(--r-1);
+  background: rgba(255, 255, 255, 0.1);
+  color: white;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  cursor: pointer;
+}
+
+.nim .nim-result button:hover {
+  background: rgba(255, 255, 255, 0.2);
+}
+
+/* ── Onboarding overlay ─────────────────────────────────────── */
+
+.nim .nim-onboard {
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.7);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 11;
+  cursor: pointer;
+}
+
+.nim .nim-onboard-inner {
+  background: var(--bg, #1a1a1a);
+  padding: 1.5rem 2rem;
+  border-radius: var(--r-1);
+  max-width: 400px;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  gap: 0.8rem;
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
+}
+
+.nim .nim-onboard-inner strong {
+  font-size: 1.2rem;
+}
+
+.nim .nim-onboard-inner p {
+  opacity: 0.85;
+  line-height: 1.4;
+}
+
+.nim .nim-onboard-inner button {
+  align-self: center;
+  padding: 0.5rem 1.2rem;
+  background: var(--blue, #4f9eff);
+  color: white;
+  border: none;
+  border-radius: var(--r-1);
+  cursor: pointer;
+  font-weight: 500;
+}
+
+/* Hide engine's default win/loss banners; we render our own. */
+.nim .game-engine-banner {
+  display: none !important;
+}

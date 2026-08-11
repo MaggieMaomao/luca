@@ -1,0 +1,256 @@
+/* Induction — visual styles */
+
+.induction .induction-wrap {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1.2rem;
+  padding: 1.5rem 1rem;
+  user-select: none;
+  position: relative;
+  min-height: 320px;
+}
+
+.induction .induction-strikes {
+  display: flex;
+  gap: 0.5rem;
+  font-size: 1.1rem;
+  letter-spacing: 0.2em;
+}
+
+.induction .induction-strike {
+  color: var(--ink-muted, rgba(255, 255, 255, 0.4));
+  transition: all 0.2s ease;
+}
+
+.induction .induction-strike.used {
+  color: #ef4444;
+  transform: scale(1.2);
+}
+
+.induction .induction-sequence {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: baseline;
+  gap: 0.4rem;
+  font-size: 1.8rem;
+  font-weight: 600;
+  font-variant-numeric: tabular-nums;
+  letter-spacing: 0.05em;
+  padding: 1rem;
+  background: rgba(255, 255, 255, 0.04);
+  border-radius: var(--r-1);
+  min-width: 280px;
+}
+
+.induction .induction-term {
+  display: inline-flex;
+  align-items: baseline;
+}
+
+.induction .induction-comma {
+  margin: 0 0.2rem;
+  opacity: 0.5;
+}
+
+.induction .induction-term-mystery {
+  margin-left: 0.5rem;
+  color: var(--blue, #4f9eff);
+  font-size: 2.4rem;
+  font-weight: 800;
+}
+
+.induction .induction-prompt {
+  font-size: 0.9rem;
+  opacity: 0.7;
+}
+
+.induction .induction-options {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 0.6rem;
+  width: 100%;
+  max-width: 360px;
+}
+
+.induction .induction-option {
+  padding: 0.9rem 1rem;
+  border-radius: var(--r-1);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  background: rgba(255, 255, 255, 0.05);
+  color: inherit;
+  font-size: 1.1rem;
+  font-weight: 600;
+  font-variant-numeric: tabular-nums;
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.induction .induction-option:hover:not(:disabled) {
+  background: rgba(79, 158, 255, 0.15);
+  border-color: var(--blue, #4f9eff);
+  transform: translateY(-1px);
+}
+
+.induction .induction-option.correct {
+  background: #22c55e;
+  border-color: #22c55e;
+  color: white;
+}
+
+.induction .induction-option.wrong {
+  background: #ef4444;
+  border-color: #ef4444;
+  color: white;
+  animation: induction-shake 0.4s ease;
+}
+
+@keyframes induction-shake {
+  0%, 100% { transform: translateX(0); }
+  25% { transform: translateX(-4px); }
+  75% { transform: translateX(4px); }
+}
+
+.induction .induction-hint-toggle {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.induction .induction-hint-btn {
+  padding: 0.4rem 0.9rem;
+  font-size: 0.85rem;
+  background: rgba(255, 255, 255, 0.05);
+  color: inherit;
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  border-radius: var(--r-1);
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.induction .induction-hint-btn:hover:not(:disabled) {
+  background: rgba(255, 255, 255, 0.1);
+}
+
+.induction .induction-hint-text {
+  font-size: 0.85rem;
+  opacity: 0.8;
+  font-style: italic;
+  max-width: 360px;
+  text-align: center;
+  line-height: 1.4;
+  padding: 0.4rem 0.8rem;
+  background: rgba(255, 255, 200, 0.06);
+  border-radius: var(--r-1);
+}
+
+/* ── Result overlay ─────────────────────────────────────────── */
+
+.induction .induction-result {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 0.7rem;
+  text-align: center;
+  padding: 2rem;
+  background: rgba(0, 0, 0, 0.9);
+  border-radius: var(--r-1);
+  z-index: 10;
+  animation: induction-result-appear 0.4s ease;
+}
+
+@keyframes induction-result-appear {
+  from { opacity: 0; transform: scale(0.95); }
+  to   { opacity: 1; transform: scale(1); }
+}
+
+.induction .induction-result.won .induction-result-title {
+  color: #22c55e;
+  font-size: 2.4rem;
+  font-weight: 800;
+}
+
+.induction .induction-result.lost .induction-result-title {
+  color: #f97316;
+  font-size: 2rem;
+  font-weight: 800;
+}
+
+.induction .induction-result-msg {
+  font-size: 0.95rem;
+  opacity: 0.9;
+}
+
+.induction .induction-result-rule {
+  font-size: 0.85rem;
+  font-style: italic;
+  opacity: 0.7;
+  max-width: 360px;
+  padding: 0.4rem 0.8rem;
+  background: rgba(255, 255, 200, 0.06);
+  border-radius: var(--r-1);
+}
+
+.induction .induction-result button {
+  margin-top: 0.5rem;
+  padding: 0.5rem 1.4rem;
+  font-size: 0.9rem;
+  font-weight: 600;
+  border-radius: var(--r-1);
+  background: rgba(255, 255, 255, 0.1);
+  color: white;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  cursor: pointer;
+}
+
+.induction .induction-result button:hover {
+  background: rgba(255, 255, 255, 0.2);
+}
+
+/* ── Onboarding ─────────────────────────────────────────────── */
+
+.induction .induction-onboard {
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.7);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 11;
+  cursor: pointer;
+}
+
+.induction .induction-onboard-inner {
+  background: var(--bg, #1a1a1a);
+  padding: 1.5rem 2rem;
+  border-radius: var(--r-1);
+  max-width: 400px;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  gap: 0.8rem;
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
+}
+
+.induction .induction-onboard-inner strong { font-size: 1.2rem; }
+.induction .induction-onboard-inner p { opacity: 0.85; line-height: 1.4; }
+.induction .induction-onboard-inner button {
+  align-self: center;
+  padding: 0.5rem 1.2rem;
+  background: var(--blue, #4f9eff);
+  color: white;
+  border: none;
+  border-radius: var(--r-1);
+  cursor: pointer;
+  font-weight: 500;
+}
+
+/* Hide engine's default banners */
+.induction .game-engine-banner {
+  display: none !important;
+}

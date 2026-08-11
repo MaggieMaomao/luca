@@ -1,0 +1,25 @@
+/* Engine — host stage layout (games add their own HUD styles). */
+.engine-stage {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 4 / 3;
+  max-height: 66vh;
+  border-radius: var(--r-3, 16px);
+  overflow: hidden;
+  background: #0e1017;
+  box-shadow: var(--shadow-card, 0 8px 30px rgba(0, 0, 0, 0.35));
+  touch-action: none;
+  cursor: grab;
+}
+.engine-stage:active { cursor: grabbing; }
+
+.engine-hint {
+  margin: 0.6rem 0 0;
+  text-align: center;
+  color: #9296a0;
+  font-size: 0.9rem;
+}
+
+@media (max-width: 860px) {
+  .engine-stage { aspect-ratio: 3 / 4; max-height: 74vh; }
+}

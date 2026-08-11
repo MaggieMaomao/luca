@@ -1,0 +1,211 @@
+{
+  "game": "knot_colouring",
+  "cases": [
+    {
+      "name": "non-trivial tricolouring (all different)",
+      "state": {
+        "arcs": 3,
+        "crossings": [
+          {
+            "over": 0,
+            "under": [
+              1,
+              2
+            ]
+          },
+          {
+            "over": 1,
+            "under": [
+              2,
+              0
+            ]
+          },
+          {
+            "over": 2,
+            "under": [
+              0,
+              1
+            ]
+          }
+        ],
+        "coloring": [
+          0,
+          1,
+          2
+        ],
+        "numColors": 3,
+        "name": "Trefoil",
+        "moves": 3
+      },
+      "reportedComplete": true,
+      "expect": {
+        "complete": true
+      }
+    },
+    {
+      "name": "non-trivial tricolouring (under-reported)",
+      "state": {
+        "arcs": 3,
+        "crossings": [
+          {
+            "over": 0,
+            "under": [
+              1,
+              2
+            ]
+          },
+          {
+            "over": 1,
+            "under": [
+              2,
+              0
+            ]
+          },
+          {
+            "over": 2,
+            "under": [
+              0,
+              1
+            ]
+          }
+        ],
+        "coloring": [
+          0,
+          1,
+          2
+        ],
+        "numColors": 3,
+        "name": "Trefoil",
+        "moves": 3
+      },
+      "reportedComplete": false,
+      "expect": {
+        "complete": true
+      }
+    },
+    {
+      "name": "trivial (all same) is not a valid solve",
+      "state": {
+        "arcs": 3,
+        "crossings": [
+          {
+            "over": 0,
+            "under": [
+              1,
+              2
+            ]
+          },
+          {
+            "over": 1,
+            "under": [
+              2,
+              0
+            ]
+          },
+          {
+            "over": 2,
+            "under": [
+              0,
+              1
+            ]
+          }
+        ],
+        "coloring": [
+          0,
+          0,
+          0
+        ],
+        "numColors": 3,
+        "name": "Trefoil",
+        "moves": 3
+      },
+      "reportedComplete": false,
+      "expect": {
+        "complete": false
+      }
+    },
+    {
+      "name": "cheat: invalid colouring reported complete",
+      "state": {
+        "arcs": 3,
+        "crossings": [
+          {
+            "over": 0,
+            "under": [
+              1,
+              2
+            ]
+          },
+          {
+            "over": 1,
+            "under": [
+              2,
+              0
+            ]
+          },
+          {
+            "over": 2,
+            "under": [
+              0,
+              1
+            ]
+          }
+        ],
+        "coloring": [
+          0,
+          0,
+          1
+        ],
+        "numColors": 3,
+        "name": "Trefoil",
+        "moves": 3
+      },
+      "reportedComplete": true,
+      "expect": {
+        "complete": false,
+        "errorCode": "CHEAT_DETECTED"
+      }
+    },
+    {
+      "name": "malformed (coloring wrong length)",
+      "state": {
+        "arcs": 3,
+        "crossings": [
+          {
+            "over": 0,
+            "under": [
+              1,
+              2
+            ]
+          },
+          {
+            "over": 1,
+            "under": [
+              2,
+              0
+            ]
+          },
+          {
+            "over": 2,
+            "under": [
+              0,
+              1
+            ]
+          }
+        ],
+        "coloring": [
+          0,
+          1
+        ],
+        "numColors": 3,
+        "name": "Trefoil",
+        "moves": 0
+      },
+      "reportedComplete": true,
+      "expect": {
+        "complete": false,
+        "errorCode": "INVALID_STATE"
+      }
+    }
+  ]
+}

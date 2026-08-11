@@ -1,0 +1,125 @@
+/* Sokoban - visual styles */
+
+.sokoban .sk-wrap {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.6rem;
+  padding: 0.8rem;
+  user-select: none;
+  position: relative;
+}
+
+.sokoban .sk-info {
+  display: flex;
+  gap: 0.4rem;
+  font-size: 0.85rem;
+  padding: 0.3rem 0.8rem;
+  background: rgba(255, 255, 255, 0.04);
+  border-radius: var(--r-1);
+}
+
+.sokoban .sk-label { opacity: 0.6; font-size: 0.75rem; }
+.sokoban .sk-value { font-weight: 600; font-variant-numeric: tabular-nums; }
+.sokoban .sk-spacer { width: 0.8rem; }
+
+.sokoban .sk-controls {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+}
+
+.sokoban .sk-controls > div {
+  display: flex;
+  gap: 4px;
+}
+
+.sokoban .sk-controls button {
+  width: 36px;
+  height: 36px;
+  border-radius: var(--r-1);
+  background: rgba(255, 255, 255, 0.06);
+  color: inherit;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  font-size: 1.1rem;
+  cursor: pointer;
+}
+
+.sokoban .sk-controls button:hover:not(:disabled) {
+  background: rgba(79, 158, 255, 0.2);
+  border-color: rgba(79, 158, 255, 0.4);
+}
+
+.sokoban .sk-result {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  text-align: center;
+  padding: 1.5rem;
+  background: rgba(0, 0, 0, 0.9);
+  border-radius: var(--r-1);
+  z-index: 10;
+  animation: sk-result-appear 0.4s ease;
+}
+
+@keyframes sk-result-appear {
+  from { opacity: 0; transform: scale(0.95); }
+  to   { opacity: 1; transform: scale(1); }
+}
+
+.sokoban .sk-result.won .sk-result-title { color: #22c55e; font-size: 1.8rem; font-weight: 800; }
+.sokoban .sk-result.lost .sk-result-title { color: #f97316; font-size: 1.8rem; font-weight: 800; }
+.sokoban .sk-result button {
+  margin-top: 0.5rem;
+  padding: 0.5rem 1.4rem;
+  font-size: 0.9rem;
+  font-weight: 600;
+  border-radius: var(--r-1);
+  background: rgba(255, 255, 255, 0.1);
+  color: white;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  cursor: pointer;
+}
+
+.sokoban .sk-onboard {
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.7);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 11;
+  cursor: pointer;
+}
+
+.sokoban .sk-onboard-inner {
+  background: var(--bg, #1a1a1a);
+  padding: 1.5rem 2rem;
+  border-radius: var(--r-1);
+  max-width: 400px;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  gap: 0.8rem;
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
+}
+
+.sokoban .sk-onboard-inner strong { font-size: 1.2rem; }
+.sokoban .sk-onboard-inner p { opacity: 0.85; line-height: 1.4; }
+.sokoban .sk-onboard-inner button {
+  align-self: center;
+  padding: 0.5rem 1.2rem;
+  background: rgba(79, 158, 255, 0.9);
+  color: white;
+  border: none;
+  border-radius: var(--r-1);
+  cursor: pointer;
+  font-weight: 500;
+}
+
+.sokoban .game-engine-banner { display: none !important; }

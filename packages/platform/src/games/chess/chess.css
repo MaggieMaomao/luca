@@ -1,0 +1,215 @@
+/* Chess - visual styles */
+
+.chess .che-wrap {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.6rem;
+  padding: 0.8rem;
+  user-select: none;
+  position: relative;
+}
+
+.chess .che-info {
+  display: flex;
+  gap: 0.4rem;
+  font-size: 0.85rem;
+  padding: 0.3rem 0.8rem;
+  background: rgba(255, 255, 255, 0.04);
+  border-radius: var(--r-1);
+}
+
+.chess .che-label { opacity: 0.6; font-size: 0.75rem; }
+.chess .che-value { font-weight: 600; font-variant-numeric: tabular-nums; }
+.chess .che-spacer { width: 1rem; }
+
+.chess .che-board {
+  display: inline-block;
+}
+
+.chess .che-files-top,
+.chess .che-files-bottom {
+  display: grid;
+  grid-template-columns: repeat(8, 1fr);
+  width: min(360px, 90vw);
+  margin: 0 auto;
+  padding: 2px 0;
+}
+
+.chess .che-files-top {
+  padding-bottom: 4px;
+}
+
+.chess .che-files-bottom {
+  padding-top: 4px;
+}
+
+.chess .che-file-label {
+  text-align: center;
+  font-size: 0.75rem;
+  font-weight: 600;
+  opacity: 0.7;
+  font-variant-numeric: tabular-nums;
+}
+
+.chess .che-board-inner {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.chess .che-ranks-left,
+.chess .che-ranks-right {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  height: var(--board-size, 360px);
+}
+
+.chess .che-rank-label {
+  font-size: 0.75rem;
+  font-weight: 600;
+  opacity: 0.7;
+  font-variant-numeric: tabular-nums;
+  width: 16px;
+  text-align: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.chess .che-grid {
+  display: grid;
+  grid-template-columns: repeat(8, 1fr);
+  grid-template-rows: repeat(8, 1fr);
+  width: min(360px, 90vw);
+  height: min(360px, 90vw);
+  border: 2px solid #000;
+  border-radius: var(--r-1);
+  overflow: hidden;
+  background: #000;
+  padding: 0;
+}
+
+.chess .che-cell {
+  border: 1px solid #000;
+  padding: 0;
+  margin: 0;
+  cursor: pointer;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0;
+  width: 100%;
+  height: 100%;
+  min-width: 0;
+  min-height: 0;
+  aspect-ratio: 1;
+}
+
+.chess .che-cell.light { background: #f0d9b5; }
+.chess .che-cell.dark { background: #b58863; }
+
+.chess .che-cell.selected { background: rgba(255, 235, 0, 0.7) !important; }
+.chess .che-cell.legal { box-shadow: inset 0 0 0 3px rgba(255, 235, 0, 0.6); }
+
+.chess .che-piece {
+  font-size: clamp(20px, 6vw, 36px);
+  line-height: 1;
+}
+
+.chess .che-piece.white { color: #fff; text-shadow: 0 0 2px #000, 0 0 2px #000; }
+.chess .che-piece.black { color: #000; }
+
+.chess .che-legal-dot {
+  position: absolute;
+  width: 25%;
+  height: 25%;
+  border-radius: 50%;
+  background: rgba(0, 0, 0, 0.3);
+}
+
+.chess .che-legal-capture {
+  position: absolute;
+  inset: 0;
+  background: rgba(255, 0, 0, 0.25);
+  border-radius: 50%;
+  width: 90%;
+  height: 90%;
+  margin: 5%;
+  pointer-events: none;
+}
+
+.chess .che-result {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  text-align: center;
+  padding: 1.5rem;
+  background: rgba(0, 0, 0, 0.9);
+  border-radius: var(--r-1);
+  z-index: 10;
+  animation: che-result-appear 0.4s ease;
+}
+
+@keyframes che-result-appear {
+  from { opacity: 0; transform: scale(0.95); }
+  to   { opacity: 1; transform: scale(1); }
+}
+
+.chess .che-result.won .che-result-title { color: #22c55e; font-size: 1.8rem; font-weight: 800; }
+.chess .che-result.lost .che-result-title { color: #f97316; font-size: 1.8rem; font-weight: 800; }
+.chess .che-result button {
+  margin-top: 0.5rem;
+  padding: 0.5rem 1.4rem;
+  font-size: 0.9rem;
+  font-weight: 600;
+  border-radius: var(--r-1);
+  background: rgba(255, 255, 255, 0.1);
+  color: white;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  cursor: pointer;
+}
+
+.chess .che-onboard {
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.7);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 11;
+  cursor: pointer;
+}
+
+.chess .che-onboard-inner {
+  background: var(--bg, #1a1a1a);
+  padding: 1.5rem 2rem;
+  border-radius: var(--r-1);
+  max-width: 400px;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  gap: 0.8rem;
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
+}
+
+.chess .che-onboard-inner strong { font-size: 1.2rem; }
+.chess .che-onboard-inner p { opacity: 0.85; line-height: 1.4; }
+.chess .che-onboard-inner button {
+  align-self: center;
+  padding: 0.5rem 1.2rem;
+  background: rgba(79, 158, 255, 0.9);
+  color: white;
+  border: none;
+  border-radius: var(--r-1);
+  cursor: pointer;
+  font-weight: 500;
+}
+
+.chess .game-engine-banner { display: none !important; }

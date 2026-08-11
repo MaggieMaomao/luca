@@ -1,0 +1,251 @@
+/* Mastermind — visual styles */
+
+.mastermind .mm-wrap {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
+  padding: 1rem;
+  user-select: none;
+  position: relative;
+}
+
+.mastermind .mm-palette {
+  display: flex;
+  gap: 0.4rem;
+  padding: 0.4rem 0.7rem;
+  background: rgba(255, 255, 255, 0.04);
+  border-radius: var(--r-1);
+}
+
+.mastermind .mm-palette-peg {
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  box-shadow: inset 0 0 4px rgba(0, 0, 0, 0.3);
+}
+
+.mastermind .mm-current {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.7rem 1rem;
+  background: rgba(255, 255, 255, 0.04);
+  border-radius: var(--r-1);
+  width: 100%;
+  max-width: 480px;
+}
+
+.mastermind .mm-current-label,
+.mastermind .mm-history-label {
+  font-size: 0.8rem;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  opacity: 0.6;
+}
+
+.mastermind .mm-slots {
+  display: flex;
+  gap: 0.4rem;
+}
+
+.mastermind .mm-slot {
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  border: 2px dashed rgba(255, 255, 255, 0.2);
+  background: rgba(255, 255, 255, 0.02);
+  cursor: pointer;
+  transition: all 0.1s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+}
+
+.mastermind .mm-slot:hover:not(:disabled) {
+  border-color: var(--blue, #4f9eff);
+  background: rgba(79, 158, 255, 0.06);
+}
+
+.mastermind .mm-slot.filled {
+  border-style: solid;
+  border-color: transparent;
+}
+
+.mastermind .mm-peg {
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  box-shadow: inset 0 0 4px rgba(0, 0, 0, 0.3);
+}
+
+.mastermind .mm-current-actions {
+  display: flex;
+  gap: 0.4rem;
+}
+
+.mastermind .mm-btn {
+  padding: 0.4rem 1rem;
+  font-size: 0.85rem;
+  font-weight: 600;
+  border-radius: var(--r-1);
+  border: none;
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.mastermind .mm-btn-primary {
+  background: var(--blue, #4f9eff);
+  color: white;
+}
+
+.mastermind .mm-btn-primary:hover:not(:disabled) { background: #3b82f6; }
+.mastermind .mm-btn-primary:disabled { background: rgba(255, 255, 255, 0.1); color: rgba(255, 255, 255, 0.4); cursor: not-allowed; }
+
+.mastermind .mm-btn-secondary {
+  background: rgba(255, 255, 255, 0.06);
+  color: inherit;
+  border: 1px solid rgba(255, 255, 255, 0.15);
+}
+
+.mastermind .mm-btn-secondary:hover:not(:disabled) { background: rgba(255, 255, 255, 0.1); }
+
+.mastermind .mm-history {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.4rem;
+  width: 100%;
+  max-width: 360px;
+}
+
+.mastermind .mm-history-empty {
+  font-size: 0.85rem;
+  opacity: 0.4;
+  padding: 0.4rem;
+}
+
+.mastermind .mm-history-list {
+  display: flex;
+  flex-direction: column-reverse;
+  gap: 0.3rem;
+  width: 100%;
+}
+
+.mastermind .mm-history-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0.3rem 0.6rem;
+  background: rgba(255, 255, 255, 0.04);
+  border-radius: var(--r-1);
+}
+
+.mastermind .mm-history-pegs {
+  display: flex;
+  gap: 0.25rem;
+}
+
+.mastermind .mm-history-pegs .mm-peg {
+  width: 18px;
+  height: 18px;
+}
+
+.mastermind .mm-history-feedback {
+  display: flex;
+  gap: 0.2rem;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+  max-width: 80px;
+}
+
+.mastermind .mm-feedback {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+}
+
+.mastermind .mm-feedback-black { background: #111; }
+.mastermind .mm-feedback-white { background: #fff; border: 1px solid #555; }
+.mastermind .mm-feedback-empty { background: rgba(255, 255, 255, 0.1); }
+
+.mastermind .mm-result {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 0.7rem;
+  text-align: center;
+  padding: 1.5rem;
+  background: rgba(0, 0, 0, 0.9);
+  border-radius: var(--r-1);
+  z-index: 10;
+  animation: mm-result-appear 0.4s ease;
+}
+
+@keyframes mm-result-appear {
+  from { opacity: 0; transform: scale(0.95); }
+  to   { opacity: 1; transform: scale(1); }
+}
+
+.mastermind .mm-result.won .mm-result-title { color: #22c55e; font-size: 2rem; font-weight: 800; }
+.mastermind .mm-result.lost .mm-result-title { color: #f97316; font-size: 2rem; font-weight: 800; }
+
+.mastermind .mm-secret { display: flex; align-items: center; gap: 0.6rem; }
+.mastermind .mm-secret-label { font-size: 0.85rem; opacity: 0.7; }
+.mastermind .mm-secret-pegs { display: flex; gap: 0.3rem; }
+.mastermind .mm-secret-pegs .mm-peg { width: 28px; height: 28px; }
+
+.mastermind .mm-result button {
+  margin-top: 0.5rem;
+  padding: 0.5rem 1.4rem;
+  font-size: 0.9rem;
+  font-weight: 600;
+  border-radius: var(--r-1);
+  background: rgba(255, 255, 255, 0.1);
+  color: white;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  cursor: pointer;
+}
+
+.mastermind .mm-onboard {
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.7);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 11;
+  cursor: pointer;
+}
+
+.mastermind .mm-onboard-inner {
+  background: var(--bg, #1a1a1a);
+  padding: 1.5rem 2rem;
+  border-radius: var(--r-1);
+  max-width: 400px;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  gap: 0.8rem;
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
+}
+
+.mastermind .mm-onboard-inner strong { font-size: 1.2rem; }
+.mastermind .mm-onboard-inner p { opacity: 0.85; line-height: 1.4; }
+.mastermind .mm-onboard-inner button {
+  align-self: center;
+  padding: 0.5rem 1.2rem;
+  background: var(--blue, #4f9eff);
+  color: white;
+  border: none;
+  border-radius: var(--r-1);
+  cursor: pointer;
+  font-weight: 500;
+}
+
+.mastermind .game-engine-banner { display: none !important; }

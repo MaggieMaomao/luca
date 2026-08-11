@@ -1,0 +1,130 @@
+/* Mazes - visual styles */
+
+.mazes .mz-wrap {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.6rem;
+  padding: 0.8rem;
+  user-select: none;
+  position: relative;
+}
+
+.mazes .mz-info {
+  display: flex;
+  gap: 0.4rem;
+  font-size: 0.85rem;
+  padding: 0.3rem 0.8rem;
+  background: rgba(255, 255, 255, 0.04);
+  border-radius: var(--r-1);
+}
+
+.mazes .mz-label { opacity: 0.6; font-size: 0.75rem; }
+.mazes .mz-value { font-weight: 600; }
+
+.mazes .mz-grid {
+  background: rgba(255, 255, 255, 0.04);
+  padding: 1px;
+  border-radius: var(--r-1);
+}
+
+.mazes .mz-controls {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+}
+
+.mazes .mz-controls > div {
+  display: flex;
+  gap: 4px;
+}
+
+.mazes .mz-controls button {
+  width: 36px;
+  height: 36px;
+  border-radius: var(--r-1);
+  background: rgba(255, 255, 255, 0.06);
+  color: inherit;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  font-size: 1.1rem;
+  cursor: pointer;
+}
+
+.mazes .mz-controls button:hover:not(:disabled) {
+  background: rgba(79, 158, 255, 0.2);
+  border-color: rgba(79, 158, 255, 0.4);
+}
+
+.mazes .mz-result {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  text-align: center;
+  padding: 1.5rem;
+  background: rgba(0, 0, 0, 0.9);
+  border-radius: var(--r-1);
+  z-index: 10;
+  animation: mz-result-appear 0.4s ease;
+}
+
+@keyframes mz-result-appear {
+  from { opacity: 0; transform: scale(0.95); }
+  to   { opacity: 1; transform: scale(1); }
+}
+
+.mazes .mz-result.won .mz-result-title { color: #22c55e; font-size: 1.8rem; font-weight: 800; }
+.mazes .mz-result-msg { font-size: 0.95rem; opacity: 0.9; }
+.mazes .mz-result button {
+  margin-top: 0.5rem;
+  padding: 0.5rem 1.4rem;
+  font-size: 0.9rem;
+  font-weight: 600;
+  border-radius: var(--r-1);
+  background: rgba(255, 255, 255, 0.1);
+  color: white;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  cursor: pointer;
+}
+
+.mazes .mz-onboard {
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.7);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 11;
+  cursor: pointer;
+}
+
+.mazes .mz-onboard-inner {
+  background: var(--bg, #1a1a1a);
+  padding: 1.5rem 2rem;
+  border-radius: var(--r-1);
+  max-width: 400px;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  gap: 0.8rem;
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
+}
+
+.mazes .mz-onboard-inner strong { font-size: 1.2rem; }
+.mazes .mz-onboard-inner p { opacity: 0.85; line-height: 1.4; }
+.mazes .mz-onboard-inner button {
+  align-self: center;
+  padding: 0.5rem 1.2rem;
+  background: rgba(79, 158, 255, 0.9);
+  color: white;
+  border: none;
+  border-radius: var(--r-1);
+  cursor: pointer;
+  font-weight: 500;
+}
+
+.mazes .game-engine-banner { display: none !important; }

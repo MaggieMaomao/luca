@@ -1,0 +1,29 @@
+/* Packing - visual styles */
+.packing .pk-wrap { display: flex; flex-direction: column; align-items: center; gap: 0.8rem; padding: 1rem; user-select: none; position: relative; }
+.packing .pk-info { display: flex; gap: 0.4rem; font-size: 0.85rem; padding: 0.3rem 0.8rem; background: rgba(255, 255, 255, 0.04); border-radius: var(--r-1); }
+.packing .pk-label { opacity: 0.6; font-size: 0.75rem; }
+.packing .pk-value { font-weight: 600; font-variant-numeric: tabular-nums; }
+.packing .pk-spacer { width: 0.8rem; }
+.packing .pk-container { gap: 2px; background: rgba(255, 255, 255, 0.12); border: 2px solid rgba(255, 255, 255, 0.15); border-radius: var(--r-1); padding: 2px; }
+.packing .pk-cell { padding: 0; border: none; border-radius: 2px; background: rgba(255, 255, 255, 0.04); cursor: pointer; transition: background 0.1s ease; }
+.packing .pk-cell:not(.filled):hover:not(:disabled) { background: rgba(79, 158, 255, 0.18); }
+.packing .pk-cell.filled { box-shadow: inset 0 0 0 1px rgba(0, 0, 0, 0.25); }
+
+.packing .pk-tray { display: flex; flex-direction: column; align-items: center; gap: 0.4rem; }
+.packing .pk-tray-label { font-size: 0.75rem; opacity: 0.6; text-transform: uppercase; letter-spacing: 0.05em; }
+.packing .pk-tray-pieces { display: flex; flex-wrap: wrap; gap: 0.6rem; justify-content: center; align-items: center; max-width: 320px; }
+.packing .pk-tray-empty { opacity: 0.5; }
+.packing .pk-piece { padding: 4px; gap: 1px; border: 2px solid transparent; border-radius: var(--r-1); background: rgba(255, 255, 255, 0.05); cursor: pointer; }
+.packing .pk-piece:hover:not(:disabled) { background: rgba(255, 255, 255, 0.1); }
+.packing .pk-piece.selected { border-color: #fff; background: rgba(79, 158, 255, 0.2); }
+.packing .pk-piece-cell { width: 14px; height: 14px; border-radius: 2px; }
+.packing .pk-result { position: absolute; inset: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 0.5rem; text-align: center; padding: 1.5rem; background: rgba(0, 0, 0, 0.9); border-radius: var(--r-1); z-index: 10; animation: pk-result-appear 0.4s ease; }
+@keyframes pk-result-appear { from { opacity: 0; transform: scale(0.95); } to { opacity: 1; transform: scale(1); } }
+.packing .pk-result.won .pk-result-title { color: #22c55e; font-size: 1.8rem; font-weight: 800; }
+.packing .pk-result button { margin-top: 0.5rem; padding: 0.5rem 1.4rem; font-size: 0.9rem; font-weight: 600; border-radius: var(--r-1); background: rgba(255, 255, 255, 0.1); color: white; border: 1px solid rgba(255, 255, 255, 0.2); cursor: pointer; }
+.packing .pk-onboard { position: absolute; inset: 0; background: rgba(0, 0, 0, 0.7); display: flex; align-items: center; justify-content: center; z-index: 11; cursor: pointer; }
+.packing .pk-onboard-inner { background: var(--bg, #1a1a1a); padding: 1.5rem 2rem; border-radius: var(--r-1); max-width: 400px; text-align: center; display: flex; flex-direction: column; gap: 0.8rem; box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4); }
+.packing .pk-onboard-inner strong { font-size: 1.2rem; }
+.packing .pk-onboard-inner p { opacity: 0.85; line-height: 1.4; }
+.packing .pk-onboard-inner button { align-self: center; padding: 0.5rem 1.2rem; background: rgba(79, 158, 255, 0.9); color: white; border: none; border-radius: var(--r-1); cursor: pointer; font-weight: 500; }
+.packing .game-engine-banner { display: none !important; }

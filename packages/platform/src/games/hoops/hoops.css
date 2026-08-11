@@ -1,0 +1,211 @@
+/* FPS Hoops — layout + HUD, themed with the site's CSS variables. */
+
+.hoops-page {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  padding: 0.75rem 1rem 1.25rem;
+  max-width: 900px;
+  margin: 0 auto;
+}
+
+.hoops-topbar {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+.hoops-title { flex: 1; margin: 0; font-size: 1.2rem; }
+
+.hoops-timer {
+  font-variant-numeric: tabular-nums;
+  font-weight: 700;
+  padding: 0.2rem 0.55rem;
+  border-radius: var(--r-2);
+  background: var(--bg-2);
+}
+.hoops-timer.low { color: #fff; background: var(--color-error); }
+
+.hoops-spots {
+  display: flex;
+  gap: 0.4rem;
+  flex-wrap: wrap;
+}
+.hoops-spot {
+  font-size: 0.8rem;
+  padding: 0.3rem 0.7rem;
+  border-radius: var(--r-round);
+  border: 1px solid var(--rule);
+  background: var(--bg-2);
+  color: var(--ink-soft);
+  cursor: pointer;
+}
+.hoops-spot.active {
+  background: var(--orange);
+  border-color: var(--orange);
+  color: #fff;
+  font-weight: 600;
+}
+
+.hoops-over {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  background: rgba(10, 12, 20, 0.72);
+  backdrop-filter: blur(3px);
+  color: #fff;
+  text-align: center;
+}
+.hoops-over-title { font-size: 1.5rem; font-weight: 800; }
+.hoops-over-score { font-size: 1.15rem; }
+.hoops-over-score b { font-variant-numeric: tabular-nums; }
+.hoops-over-sub { font-size: 0.85rem; opacity: 0.8; margin-bottom: 0.4rem; }
+
+.hoops-stage {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 4 / 3;
+  max-height: 66vh;
+  border-radius: var(--r-3);
+  overflow: hidden;
+  background: #0e1017;
+  box-shadow: var(--shadow-card);
+  touch-action: none;      /* let flicks drive shots, not scroll */
+  cursor: grab;
+}
+.hoops-stage:active { cursor: grabbing; }
+
+/* First-person hands viewmodel — real photo shooting sequence (square frames) */
+.hoops-vm {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  pointer-events: none;
+}
+.hoops-vm-img {
+  position: absolute;
+  left: 50%;
+  bottom: -8%;
+  width: 46%;
+  max-width: 400px;
+  aspect-ratio: 1 / 1;
+  object-fit: contain;
+  /* Photos are already right-handed (shooting hand on the right). A future
+     "dominant hand" toggle can add scaleX(-1) here for a left-handed form. */
+  transform: translateX(-50%);
+  user-select: none;
+  /* two stacked layers crossfade on frame swap */
+  opacity: 0;
+  transition: opacity 0.11s linear;
+}
+@media (max-width: 860px) {
+  .hoops-vm-img { width: 64%; }
+}
+
+/* HUD stat line (top-left) */
+.hoops-hud {
+  position: absolute;
+  top: 0.6rem;
+  left: 0.6rem;
+  display: flex;
+  align-items: stretch;
+  gap: 0.85rem;
+  padding: 0.45rem 0.75rem;
+  border-radius: var(--r-2);
+  background: rgba(10, 12, 20, 0.6);
+  backdrop-filter: blur(6px);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  color: #fff;
+  pointer-events: none;
+}
+.hoops-hero { display: flex; flex-direction: column; justify-content: center; padding-right: 0.75rem; border-right: 1px solid rgba(255,255,255,0.12); }
+.hoops-hero-label { font-size: 0.6rem; text-transform: uppercase; letter-spacing: 0.08em; opacity: 0.65; }
+.hoops-hero-value { font-size: 1.7rem; font-weight: 800; line-height: 1; font-variant-numeric: tabular-nums; }
+.hoops-substats { display: flex; align-items: center; gap: 0.85rem; }
+.hoops-stat { display: flex; flex-direction: column; align-items: center; line-height: 1.1; }
+.hoops-stat-label { font-size: 0.58rem; text-transform: uppercase; letter-spacing: 0.05em; opacity: 0.65; }
+.hoops-stat-value { font-size: 1rem; font-weight: 700; font-variant-numeric: tabular-nums; }
+
+/* Shot telemetry panel (bottom-left) */
+.hoops-telemetry {
+  position: absolute;
+  left: 0.6rem;
+  bottom: 0.6rem;
+  width: 190px;
+  padding: 0.55rem 0.7rem;
+  border-radius: var(--r-2);
+  background: rgba(10, 12, 20, 0.6);
+  backdrop-filter: blur(6px);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  color: #fff;
+  pointer-events: none;
+}
+.tele-title { font-size: 0.6rem; text-transform: uppercase; letter-spacing: 0.09em; opacity: 0.6; margin-bottom: 0.4rem; }
+.tele-row {
+  display: grid;
+  grid-template-columns: 4.2rem 1fr auto;
+  align-items: center;
+  gap: 0.5rem;
+  margin-bottom: 0.3rem;
+}
+.tele-row:last-child { margin-bottom: 0; }
+.tele-label { font-size: 0.62rem; text-transform: uppercase; letter-spacing: 0.04em; opacity: 0.7; }
+.tele-track { position: relative; height: 5px; border-radius: var(--r-round); background: rgba(255,255,255,0.14); overflow: hidden; }
+.tele-fill { position: absolute; inset: 0 auto 0 0; height: 100%; border-radius: var(--r-round); background: linear-gradient(90deg, var(--orange-l), var(--orange)); }
+.tele-track:has(.tele-needle) { overflow: visible; }
+.tele-needle { position: absolute; top: 50%; width: 8px; height: 8px; border-radius: 50%; background: var(--orange); transform: translate(-50%, -50%); box-shadow: 0 0 0 2px rgba(10,12,20,0.6); }
+.tele-value { font-size: 0.72rem; font-weight: 700; font-variant-numeric: tabular-nums; white-space: nowrap; }
+
+.hoops-flash {
+  position: absolute;
+  top: 40%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 1.6rem;
+  font-weight: 800;
+  padding: 0.3rem 1rem;
+  border-radius: var(--r-round);
+  pointer-events: none;
+  animation: hoops-pop 0.9s ease-out forwards;
+}
+.hoops-flash.scored { color: #fff; background: rgba(34, 197, 94, 0.85); }
+.hoops-flash.missed { color: #fff; background: rgba(120, 120, 130, 0.7); }
+
+@keyframes hoops-pop {
+  0% { opacity: 0; transform: translate(-50%, -40%) scale(0.8); }
+  20% { opacity: 1; transform: translate(-50%, -50%) scale(1.05); }
+  80% { opacity: 1; }
+  100% { opacity: 0; transform: translate(-50%, -60%) scale(1); }
+}
+
+.hoops-streak {
+  position: absolute;
+  top: 0.6rem;
+  right: 0.6rem;
+  padding: 0.35rem 0.7rem;
+  border-radius: var(--r-round);
+  background: rgba(232, 101, 30, 0.9);
+  color: #fff;
+  font-weight: 800;
+  font-size: 0.85rem;
+  pointer-events: none;
+  animation: hoops-streak-pulse 0.9s ease-in-out infinite;
+}
+@keyframes hoops-streak-pulse {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.08); }
+}
+
+.hoops-hint {
+  text-align: center;
+  color: var(--ink-muted);
+  font-size: 0.82rem;
+  margin: 0;
+}
+
+@media (max-width: 860px) {
+  .hoops-stage { aspect-ratio: 3 / 4; max-height: 74vh; }
+}

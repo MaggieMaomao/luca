@@ -1,0 +1,215 @@
+/* Magic Square — visual styles */
+
+.magic-square .ms-wrap {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
+  padding: 1rem;
+  user-select: none;
+  position: relative;
+}
+
+.magic-square .ms-target {
+  display: flex;
+  align-items: baseline;
+  gap: 0.6rem;
+  font-size: 1rem;
+  padding: 0.4rem 1rem;
+  background: rgba(255, 255, 255, 0.04);
+  border-radius: var(--r-1);
+}
+
+.magic-square .ms-target-label {
+  opacity: 0.7;
+}
+
+.magic-square .ms-target-value {
+  font-size: 1.4rem;
+  font-weight: 800;
+  color: var(--blue, #4f9eff);
+  font-variant-numeric: tabular-nums;
+}
+
+.magic-square .ms-grid {
+  display: grid;
+  gap: 4px;
+  background: rgba(255, 255, 255, 0.1);
+  padding: 4px;
+  border-radius: var(--r-1);
+  width: 100%;
+  max-width: 360px;
+  aspect-ratio: 1;
+}
+
+.magic-square .ms-cell {
+  background: rgba(255, 255, 255, 0.04);
+  color: inherit;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: var(--r-1);
+  font-size: 1.2rem;
+  font-weight: 600;
+  font-variant-numeric: tabular-nums;
+  cursor: pointer;
+  transition: all 0.1s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  aspect-ratio: 1;
+}
+
+.magic-square .ms-cell:hover:not(:disabled) {
+  background: rgba(79, 158, 255, 0.1);
+  border-color: var(--blue, #4f9eff);
+}
+
+.magic-square .ms-cell.filled {
+  background: rgba(255, 255, 255, 0.06);
+}
+
+.magic-square .ms-cell.selected {
+  background: rgba(79, 158, 255, 0.25);
+  border-color: var(--blue, #4f9eff);
+  transform: scale(0.95);
+}
+
+.magic-square .ms-cell.correct {
+  background: rgba(34, 197, 94, 0.2);
+  border-color: #22c55e;
+  color: #22c55e;
+}
+
+.magic-square .ms-palette {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.7rem 1rem;
+  background: rgba(79, 158, 255, 0.08);
+  border-radius: var(--r-1);
+}
+
+.magic-square .ms-palette-label {
+  font-size: 0.85rem;
+  opacity: 0.7;
+}
+
+.magic-square .ms-palette-buttons {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.3rem;
+  justify-content: center;
+  max-width: 280px;
+}
+
+.magic-square .ms-palette-btn {
+  min-width: 32px;
+  height: 32px;
+  border-radius: var(--r-1);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  background: rgba(255, 255, 255, 0.05);
+  color: inherit;
+  font-weight: 600;
+  font-variant-numeric: tabular-nums;
+  cursor: pointer;
+  transition: all 0.1s ease;
+}
+
+.magic-square .ms-palette-btn:hover:not(:disabled) {
+  background: rgba(79, 158, 255, 0.2);
+  border-color: var(--blue, #4f9eff);
+}
+
+.magic-square .ms-palette-btn.used {
+  opacity: 0.25;
+  cursor: not-allowed;
+  text-decoration: line-through;
+}
+
+.magic-square .ms-result {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 0.7rem;
+  text-align: center;
+  padding: 2rem;
+  background: rgba(0, 0, 0, 0.85);
+  border-radius: var(--r-1);
+  z-index: 10;
+  animation: ms-result-appear 0.4s ease;
+}
+
+@keyframes ms-result-appear {
+  from { opacity: 0; transform: scale(0.95); }
+  to   { opacity: 1; transform: scale(1); }
+}
+
+.magic-square .ms-result.won .ms-result-title {
+  color: #22c55e;
+  font-size: 2.4rem;
+  font-weight: 800;
+}
+
+.magic-square .ms-result-msg {
+  font-size: 0.95rem;
+  opacity: 0.9;
+}
+
+.magic-square .ms-result button {
+  margin-top: 0.5rem;
+  padding: 0.5rem 1.4rem;
+  font-size: 0.9rem;
+  font-weight: 600;
+  border-radius: var(--r-1);
+  background: rgba(255, 255, 255, 0.1);
+  color: white;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  cursor: pointer;
+}
+
+.magic-square .ms-result button:hover {
+  background: rgba(255, 255, 255, 0.2);
+}
+
+.magic-square .ms-onboard {
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.7);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 11;
+  cursor: pointer;
+}
+
+.magic-square .ms-onboard-inner {
+  background: var(--bg, #1a1a1a);
+  padding: 1.5rem 2rem;
+  border-radius: var(--r-1);
+  max-width: 400px;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  gap: 0.8rem;
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
+}
+
+.magic-square .ms-onboard-inner strong { font-size: 1.2rem; }
+.magic-square .ms-onboard-inner p { opacity: 0.85; line-height: 1.4; }
+.magic-square .ms-onboard-inner button {
+  align-self: center;
+  padding: 0.5rem 1.2rem;
+  background: var(--blue, #4f9eff);
+  color: white;
+  border: none;
+  border-radius: var(--r-1);
+  cursor: pointer;
+  font-weight: 500;
+}
+
+.magic-square .game-engine-banner {
+  display: none !important;
+}

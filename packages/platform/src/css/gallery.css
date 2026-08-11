@@ -1,0 +1,515 @@
+/* Luca Games — gallery + coming-soon + cards
+ *
+ * All radii use the metroUI tokens: var(--r-1) for xs (cards, inputs,
+ * stat blocks), var(--r-3) for md (slightly larger surfaces like the
+ * coming-soon hero), var(--r-round) ONLY for chips/badges (never for
+ * cards/inputs).
+ *
+ * All colors use theme tokens. NEVER hardcode #fff or #000 — the page
+ * has to work in both light and dark themes. The previous code used
+ * `var(--card-bg, #fff)` which silently fell back to white in dark mode
+ * (the token was undefined) — fixed by using var(--bg-2) which IS
+ * defined in both themes.
+ */
+
+/* ── Gallery page ─────────────────────────────────────────────── */
+
+.gc-page {
+  max-width: 960px;
+  margin: 0 auto;
+  padding: 0 16px 64px;
+}
+
+.gc-hero {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 24px 28px;
+  /* Subtle math-blue tint — matches the 2048 + Sudoku game palette. */
+  background: linear-gradient(135deg,
+    color-mix(in oklab, var(--c-math) 6%, transparent) 0%,
+    color-mix(in oklab, var(--c-math) 2%, transparent) 100%);
+  border: 1px solid var(--rule-soft);
+  border-radius: var(--r-1);  /* xs */
+  margin: 16px 0 24px;
+}
+
+.gc-hero-text {
+  flex: 1;
+  min-width: 0;
+}
+
+.gc-title {
+  font-size: 32px;
+  font-weight: 700;
+  color: var(--ink);
+  margin: 0 0 6px;
+  letter-spacing: -0.01em;
+}
+
+.gc-subtitle {
+  font-size: 14px;
+  color: var(--ink-muted);
+  line-height: 1.5;
+  max-width: 540px;
+  margin: 0;
+}
+
+.gc-hero-stats {
+  display: flex;
+  gap: 10px;
+  flex-shrink: 0;
+}
+
+.gc-stat {
+  background: var(--bg-2);
+  border: 1px solid var(--rule-soft);
+  border-radius: var(--r-1);  /* xs */
+  padding: 10px 14px;
+  text-align: center;
+  min-width: 60px;
+}
+
+.gc-stat-value {
+  font-size: 20px;
+  font-weight: 700;
+  color: var(--ink);
+  line-height: 1.1;
+}
+
+.gc-stat-label {
+  font-size: 10px;
+  color: var(--ink-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  margin-top: 2px;
+}
+
+.gc-stat-playable {
+  background: rgba(7, 193, 96, 0.08);
+  border-color: rgba(7, 193, 96, 0.25);
+}
+
+.gc-stat-playable .gc-stat-value { color: #066e3a; }
+
+[data-theme="dark"] .gc-stat-playable .gc-stat-value { color: #4ade80; }
+
+.gc-stat-soon {
+  background: rgba(255, 138, 0, 0.06);
+  border-color: rgba(255, 138, 0, 0.2);
+}
+
+.gc-stat-soon .gc-stat-value { color: #b25a00; }
+
+[data-theme="dark"] .gc-stat-soon .gc-stat-value { color: var(--orange-l); }
+
+/* Filter bar */
+
+.gc-filter-bar {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 16px;
+  flex-wrap: wrap;
+}
+
+/* Filter chips — built on the shared cb-btn system
+ * (cb-btn-sm for size, cb-btn-secondary for inactive, cb-btn-primary
+ * for active). The count badge is a small inline span that uses
+ * the cb-btn gap for spacing. */
+
+.gc-filter-chips {
+  display: flex;
+  gap: 6px;
+}
+
+.gc-filter-chip {
+  /* cb-btn already provides xs (var(--r-1)) corner radius.
+   * Add gap for the count badge to breathe. */
+  gap: 8px;
+}
+
+.gc-filter-count {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 18px;
+  height: 18px;
+  padding: 0 5px;
+  font-size: 11px;
+  font-weight: 700;
+  line-height: 1;
+  border-radius: var(--r-1);  /* xs — match the button's corner radius */
+  background: var(--rule-soft);
+  color: var(--ink-muted);
+}
+
+/* Inactive chip (cb-btn-secondary) — count badge needs to match the
+ * secondary button's neutral palette */
+.gc-filter-chip.cb-btn-secondary .gc-filter-count {
+  background: var(--rule);
+  color: var(--ink-soft);
+}
+
+/* Active chip (cb-btn-primary orange) — count badge inverts to
+ * white-on-translucent for contrast on the orange button */
+.gc-filter-chip.cb-btn-primary .gc-filter-count {
+  background: rgba(255, 255, 255, 0.3);
+  color: #fff;
+}
+
+.gc-search {
+  flex: 1;
+  min-width: 180px;
+  padding: 8px 12px;
+  border: 1px solid var(--rule);
+  border-radius: var(--r-1);  /* xs — not a pill! */
+  font-size: 14px;
+  background: var(--bg-2);
+  color: var(--ink);
+  font-family: inherit;
+}
+
+.gc-search::placeholder { color: var(--ink-muted); }
+
+.gc-search:focus {
+  outline: none;
+  border-color: var(--orange);
+  box-shadow: 0 0 0 3px rgba(255, 138, 0, 0.1);
+}
+
+/* Card grid */
+
+.gc-grid {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 12px;
+}
+
+.gc-card {
+  display: flex;
+  gap: 14px;
+  padding: 16px 18px;
+  background: var(--bg-2);
+  border: 1px solid var(--rule-soft);
+  border-left: 3px solid var(--rule-soft);
+  border-radius: var(--r-1);  /* xs — game cards are NOT pills */
+  text-decoration: none;
+  color: var(--ink);
+  transition: background 0.15s ease, transform 0.15s ease, border-left-color 0.15s ease;
+}
+
+.gc-card:hover {
+  background: var(--bg);
+  transform: translateX(2px);
+}
+
+.gc-card-playable {
+  border-left-color: var(--orange);
+}
+
+.gc-card-soon {
+  /* default — already set above */
+}
+
+.gc-card-icon {
+  font-size: 32px;
+  width: 56px;
+  height: 56px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--bg);
+  border: 1px solid var(--rule-soft);
+  border-radius: var(--r-1);  /* xs */
+  flex-shrink: 0;
+}
+
+.gc-card-body {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.gc-card-head {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.gc-card-title {
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--ink);
+  margin: 0;
+}
+
+.gc-card-badge {
+  font-size: 10px;
+  padding: 2px 8px;
+  border-radius: var(--r-round);  /* pill — OK for badges */
+  text-transform: uppercase;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+}
+
+.gc-badge-playable {
+  background: rgba(7, 193, 96, 0.12);
+  color: #066e3a;
+}
+
+[data-theme="dark"] .gc-badge-playable { color: #4ade80; }
+
+.gc-badge-soon {
+  background: rgba(255, 138, 0, 0.1);
+  color: #b25a00;
+}
+
+[data-theme="dark"] .gc-badge-soon { color: var(--orange-l); }
+
+.gc-card-desc {
+  font-size: 13px;
+  color: var(--ink-muted);
+  line-height: 1.45;
+  margin: 0;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.gc-card-foot {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: 4px;
+}
+
+.gc-card-difficulty {
+  font-size: 11px;
+  color: var(--ink-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+.gc-card-arrow {
+  font-size: 16px;
+  color: var(--orange);
+  transition: transform 0.15s ease;
+}
+
+.gc-card:hover .gc-card-arrow {
+  transform: translateX(2px);
+}
+
+.gc-empty {
+  padding: 48px 16px;
+  text-align: center;
+  color: var(--ink-muted);
+  font-size: 14px;
+}
+
+.gc-credits {
+  margin-top: 32px;
+  padding-top: 16px;
+  border-top: 1px solid var(--rule-soft);
+  font-size: 12px;
+  color: var(--ink-muted);
+  text-align: center;
+}
+
+.gc-credits a {
+  color: var(--orange);
+  text-decoration: none;
+}
+
+.gc-credits a:hover {
+  text-decoration: underline;
+}
+
+/* ── ComingSoon page ──────────────────────────────────────────── */
+
+.cs-page {
+  max-width: 640px;
+  margin: 0 auto;
+  padding: 0 16px 64px;
+}
+
+.cs-back-link {
+  display: inline-block;
+  margin: 16px 0;
+  color: var(--ink-muted);
+  font-size: 13px;
+  text-decoration: none;
+}
+
+.cs-back-link:hover {
+  color: var(--ink);
+  text-decoration: underline;
+}
+
+.cs-hero {
+  display: flex;
+  align-items: flex-start;
+  gap: 18px;
+  padding: 24px 28px;
+  background: var(--bg-2);
+  border: 1px solid var(--rule-soft);
+  border-left: 3px solid var(--orange);
+  border-radius: var(--r-1);  /* xs */
+  margin-bottom: 20px;
+}
+
+.cs-hero-icon {
+  font-size: 48px;
+  width: 80px;
+  height: 80px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(255, 138, 0, 0.08);
+  border-radius: var(--r-1);  /* xs */
+  flex-shrink: 0;
+}
+
+.cs-hero-text {
+  flex: 1;
+  min-width: 0;
+}
+
+.cs-status-chip {
+  display: inline-block;
+  font-size: 11px;
+  padding: 3px 10px;
+  border-radius: var(--r-round);  /* pill — OK for status chip */
+  background: rgba(255, 138, 0, 0.1);
+  color: #b25a00;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  font-weight: 600;
+  margin-bottom: 8px;
+}
+
+[data-theme="dark"] .cs-status-chip { color: var(--orange-l); }
+
+.cs-name {
+  font-size: 28px;
+  font-weight: 700;
+  color: var(--ink);
+  margin: 0 0 6px;
+}
+
+.cs-description {
+  font-size: 14px;
+  color: var(--ink-muted);
+  line-height: 1.5;
+  margin: 0;
+}
+
+.cs-card {
+  background: var(--bg-2);
+  border: 1px solid var(--rule-soft);
+  border-radius: var(--r-1);  /* xs */
+  padding: 24px 28px;
+  margin-bottom: 20px;
+}
+
+.cs-card-title {
+  font-size: 16px;
+  font-weight: 600;
+  color: var(--ink);
+  margin: 0 0 8px;
+}
+
+.cs-card-text {
+  font-size: 14px;
+  color: var(--ink-muted);
+  line-height: 1.5;
+  margin: 0 0 16px;
+}
+
+.cs-suggestions {
+  list-style: none;
+  padding: 0;
+  margin: 0 0 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.cs-suggestion {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 16px;
+  background: var(--bg);
+  border: 1px solid var(--rule-soft);
+  border-radius: var(--r-1);  /* xs */
+  text-decoration: none;
+  color: var(--ink);
+  transition: background 0.15s ease, border-color 0.15s ease;
+}
+
+.cs-suggestion:hover {
+  background: rgba(255, 138, 0, 0.06);
+  border-color: var(--orange);
+}
+
+.cs-suggestion-icon {
+  font-size: 22px;
+}
+
+.cs-suggestion-name {
+  flex: 1;
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--ink);
+}
+
+.cs-suggestion-arrow {
+  font-size: 16px;
+  color: var(--orange);
+}
+
+.cs-actions {
+  display: flex;
+  gap: 8px;
+}
+
+/* Buttons use .cb-btn from the shared metroUI system (index.css) */
+
+.cs-credits {
+  text-align: center;
+  font-size: 12px;
+  color: var(--ink-muted);
+  margin-top: 12px;
+}
+
+.cs-credits a {
+  color: var(--orange);
+  text-decoration: none;
+}
+
+.cs-credits a:hover {
+  text-decoration: underline;
+}
+
+@media (max-width: 720px) {
+  .gc-hero {
+    flex-direction: column;
+  }
+  .gc-hero-stats { width: 100%; }
+  .gc-stat { flex: 1; }
+  .gc-grid { grid-template-columns: 1fr; }
+  .gc-title { font-size: 24px; }
+  .cs-hero { flex-direction: column; }
+  .cs-name { font-size: 22px; }
+  .cs-hero-icon { width: 64px; height: 64px; font-size: 36px; }
+}
