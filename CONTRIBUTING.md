@@ -30,6 +30,8 @@ Node **>= 18** is required.
 
 ## Adding a game
 
+**Fastest start:** `npx create-luca-game <slug>` scaffolds the game files (logic + test + Game object + component + index) and prints the three registration edits.
+
 Each game lives in `packages/platform/src/games/<slug>/`. See an existing game
 (e.g. `sudoku/` for a turn-based puzzle, `toss/` for an action game) and
 `docs/GAME_DEFINITION.md`. In short you provide:

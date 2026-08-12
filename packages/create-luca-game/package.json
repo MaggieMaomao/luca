@@ -1,0 +1,18 @@
+{
+  "name": "create-luca-game",
+  "version": "0.1.0",
+  "description": "Scaffold a new Luca game (action engine) into @luca-game/platform.",
+  "type": "module",
+  "bin": {
+    "create-luca-game": "./index.mjs"
+  },
+  "files": ["index.mjs", "README.md"],
+  "license": "MIT",
+  "author": "MaggieMaomao <https://github.com/MaggieMaomao>",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/MaggieMaomao/luca.git",
+    "directory": "packages/create-luca-game"
+  },
+  "keywords": ["luca", "game", "scaffold", "generator", "cli"]
+}
