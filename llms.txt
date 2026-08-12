@@ -1,0 +1,43 @@
+# Luca
+
+> Luca is an open-source, MIT-licensed browser game platform: a generic engine
+> plus a curated collection of games. It's designed to be built on — including by
+> AI coding agents. This file maps the project for LLMs; see AGENTS.md for the
+> step-by-step build guide and packages/mcp for an MCP server.
+
+Luca is an npm-workspaces monorepo. Games use the **action engine**
+(`@luca-game/engine/action`) and live in `packages/platform/src/games/<slug>/`.
+Each game is a pure-logic `Game<State, Intent, Ev>` object mounted with
+`<GameHost game={...} />`. Add one with `npx create-luca-game <slug>`, register it
+with three edits, and verify with `luca validate <slug>` + `npm test`.
+
+## Build a game (start here)
+
+- [AGENTS.md](./AGENTS.md): Canonical, literal instructions for an AI agent to add/modify a game — the contract, the steps, the rules, the self-verify loop.
+- [create-luca-game](./packages/create-luca-game/README.md): `npx create-luca-game <slug>` scaffolds a valid, test-passing game + prints the three registration edits.
+- [Game definition](./docs/GAME_DEFINITION.md): The full `Game` contract reference.
+
+## Concepts & reference
+
+- [What is Luca?](./docs/guide/getting-started.md): Quickstart + the 5-minute path.
+- [Concepts](./docs/guide/concepts.md): The two engines (turn-based + action/3D), the contract, conventions.
+- [Build your first game](./docs/guide/your-first-game.md): Hands-on tutorial.
+- [Architecture](./docs/ARCHITECTURE.md): How the pieces fit.
+- [Gesture algorithm](./docs/GESTURE_ALGORITHM.md): The input pipeline (OneEuroFilter → GestureEngine → ThrowSystem).
+- [Completion API](./docs/COMPLETION_API.md): Optional server-side scoring/validation contract.
+
+## Tooling for agents
+
+- [MCP server](./packages/mcp/README.md): Tools an agent calls directly — get the contract, list games, scaffold, validate, run tests.
+- `luca validate <slug> [--json]`: Structured, fix-oriented checks (files, registration, test) for the generate→validate→fix loop.
+
+## Conventions (must-follow)
+
+- Logic files (`<slug>.ts`) are **pure** — no React/DOM; JSX goes in `*.tsx`.
+- Non-test source uses **extensionless** relative imports; `*.test.ts` uses `.ts` extensions.
+- Runtime engine values from `@luca-game/engine/action/input`; types from `@luca-game/engine/action`.
+- Every game ships a `<slug>.test.ts`; `npm test` must stay green.
+
+## Optional
+
+- [Full docs bundle](./llms-full.txt): AGENTS.md + the contract + guides concatenated for a single context load.

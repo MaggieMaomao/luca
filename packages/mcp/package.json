@@ -1,0 +1,21 @@
+{
+  "name": "@luca-game/mcp",
+  "version": "0.1.0",
+  "description": "MCP server for Luca — let your AI coding agent scaffold, validate, and test games.",
+  "type": "module",
+  "bin": {
+    "luca-mcp": "./index.mjs"
+  },
+  "files": ["index.mjs", "README.md"],
+  "dependencies": {
+    "@modelcontextprotocol/sdk": "^1.0.0"
+  },
+  "license": "MIT",
+  "author": "MaggieMaomao <https://github.com/MaggieMaomao>",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/MaggieMaomao/luca.git",
+    "directory": "packages/mcp"
+  },
+  "keywords": ["luca", "mcp", "model-context-protocol", "ai", "agent", "game"]
+}
