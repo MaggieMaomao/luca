@@ -34,3 +34,8 @@ coverage/
 # Bundled tarballs (build artifacts of scripts/bundle-platform.mjs)
 dist-bundles/
 *.tgz
+
+# Docs site (generated)
+docs/.vitepress/dist/
+docs/.vitepress/cache/
+docs/reference/

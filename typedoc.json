@@ -1,0 +1,16 @@
+{
+  "$schema": "https://typedoc.org/schema.json",
+  "plugin": ["typedoc-plugin-markdown"],
+  "entryPoints": [
+    "packages/engine/src/action/index.ts"
+  ],
+  "exclude": ["**/realtime/**", "**/*.test.ts"],
+  "tsconfig": "packages/engine/tsconfig.json",
+  "out": "docs/reference/api",
+  "entryFileName": "index",
+  "readme": "none",
+  "githubPages": false,
+  "excludeInternal": true,
+  "hideGenerator": true,
+  "skipErrorChecking": true
+}
