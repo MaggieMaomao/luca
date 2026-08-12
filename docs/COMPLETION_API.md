@@ -196,7 +196,7 @@ Two runners check the **same** fixtures:
 
 - **TS** — `packages/platform/src/games/conformance.test.ts` (part of `npm test`):
   the game's canonical solved-predicate must equal each case's `expect.complete`.
-- **Python** — `catobigato.com/backend/tests/luca/test_conformance.py`: the
+- **Python** — a server-side conformance test (on the consumer's backend): the
   registered validator's full verdict (`complete` + `error_code`) must match
   `expect`.
 

@@ -2,10 +2,9 @@
 //
 // For every shared fixture (`<slug>/<slug>.cases.json`), check that the game's
 // canonical "is this a solved/winning state" predicate agrees with the
-// fixture's expected `complete`. The Python runner
-// (catobigato/backend/tests/luca/test_conformance.py) asserts the same
-// fixtures against the Python validators — so if both sides match the
-// fixtures, the TS logic and the Python ports cannot drift apart.
+// fixture's expected `complete`. A server-side Python runner asserts the same
+// fixtures against the Python validators — so if both sides match the fixtures,
+// the TS logic and the Python ports cannot drift apart.
 
 import { test, ok, done } from './_testkit.ts'
 import { readFileSync } from 'node:fs'

@@ -7,7 +7,7 @@
 // two share infrastructure (storage, lifecycle, completion, React
 // hosting) but not the state-machine model.
 //
-// See ../PHASE_6_REALTIME_ENGINE.md for the full design.
+// See docs/GESTURE_ALGORITHM.md for the gesture-to-shot algorithm.
 
 // ── React surface ──────────────────────────────────────────────────────────
 

@@ -9,8 +9,7 @@
 // Adding a real-time game = implement `RealTimeGameDefinition` + provide
 // a renderer + physics setup. The engine handles the rest.
 //
-// See ../PHASE_6_REALTIME_ENGINE.md (and ../GESTURE_ALGORITHM.md for
-// the gesture-to-shot algorithm) for the full design.
+// See docs/GESTURE_ALGORITHM.md for the gesture-to-shot algorithm.
 //
 // Generic params:
 //   TState  — game state (positions, scores, timers, etc.)

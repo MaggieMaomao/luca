@@ -7,9 +7,10 @@ Helper scripts for the luca monorepo.
 Builds a self-contained `@luca-game/platform` tarball with
 `@luca-game/engine` bundled inside it as a `bundledDependency`.
 
-This works around npm/yarn's inability to install two `file:` deps
-where one references the other. See [../docs/DISTRIBUTION.md](../docs/DISTRIBUTION.md)
-for the full explanation.
+This works around npm/yarn's inability to install two `file:` deps where one
+references the other: `@luca-game/platform` depends on `@luca-game/engine`, so
+the engine is packed and bundled *inside* the platform tarball as a
+`bundledDependency`. A consumer then installs a single self-contained tarball.
 
 **Usage:**
 

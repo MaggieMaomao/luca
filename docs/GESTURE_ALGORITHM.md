@@ -547,19 +547,10 @@ game for a week before graduating to the engine.
 
 ---
 
-## 11. What comes next
+## 11. Where this lives in the engine
 
-- **Step 3** — the MVP build plan (1-2 weeks, day-by-day, ready to
-  execute). This is the next step after the gesture algorithm.
-- **Phase 6.0** — start the engine skeleton (`realtime/` folder,
-  `RealTimeGameDefinition` types, `useRealTimeController` hook).
-  The engine skeleton is testable without a basketball game; we
-  build a "hello world" real-time game to validate the hook.
-
-The full execution chain is now: algorithm (this doc, done) → build
-plan (Step 3, next) → Phase 6.0 code (start after Step 3).
-
-Both docs (PHASE_6_REALTIME_ENGINE.md and GESTURE_ALGORITHM.md) are
-written from the basketball game's perspective: every API is
-designed to satisfy a real need that emerged from gameplay, not
-from speculation.
+The canonical implementation of this algorithm is the real-time engine's
+`ThrowSystem` (`packages/engine/src/realtime/`). The API is written from a real
+game's perspective: every knob exists to satisfy a need that emerged from actual
+gameplay, not from speculation. Once a game has the right feel, the algorithm is
+locked and the engine's `ThrowSystem` is the source of truth.

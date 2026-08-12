@@ -12,15 +12,6 @@ export default defineConfig({
   cleanUrls: true,
   lastUpdated: true,
 
-  srcExclude: [
-    'PHASE_6_GAMES.md',
-    'PHASE_6_MVP_BUILD_PLAN.md',
-    'PHASE_6_REALTIME_ENGINE.md',
-    'GAMES_AUDIT.md',
-    'DISTRIBUTION.md',
-    'PUBLISHING.md',
-    'COMPLETION_WIRING_PLAN.md',
-  ],
 
   themeConfig: {
     nav: [

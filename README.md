@@ -34,8 +34,8 @@ Luca splits along the line **"things every game needs"** (engine) vs **"the actu
 ## Status
 
 **v0.1.0 — public preview.** Both packages are published to the public npm
-registry under the `@luca-game` scope. See `docs/STATUS.md` for the
-roadmap.
+registry under the `@luca-game` scope. See the [documentation site](https://maggiemaomao.github.io/luca/)
+for guides and the API reference.
 
 ---
 
